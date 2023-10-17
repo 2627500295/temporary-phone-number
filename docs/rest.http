@@ -1,0 +1,36 @@
+
+### Get welcome
+GET {{host}}
+Content-Type: application/json
+
+
+# Phone
+
+### List Phones
+
+GET  {{host}}/phones
+Content-Type: application/json
+
+### Create a Phone
+
+POST {{host}}/phones
+Content-Type: application/json
+
+{
+  "phoneNumber": "+12096777520"
+}
+
+### Retrieve a Phone
+
+GET {{host}}/phones/:id
+Content-Type: application/json
+
+### Update a Phone
+
+PUT {{host}}/phones/:id
+Content-Type: application/json
+
+### Delete a Phone
+
+DELETE {{host}}/phones/:id
+Content-Type: application/json
