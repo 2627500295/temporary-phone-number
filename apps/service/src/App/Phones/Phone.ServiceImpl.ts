@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PhoneService } from './Phone.Service';
-import { InjectRepository } from '@nestjs/typeorm';
-import { PhoneEntity } from '@domain/Entities/Phone.Entity';
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { PhoneEntity } from '@domain/Entities/Phone.Entity';
 import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
+
+import { PhoneService } from './Phone.Service';
 
 @Injectable()
 export class PhoneServiceImpl implements PhoneService {
@@ -14,12 +16,9 @@ export class PhoneServiceImpl implements PhoneService {
 
   public async createPhone(body: CreatePhoneInput): Promise<any> {
     const entity = this.phoneRepository.create(body);
-    const found = await this.phoneRepository.findOneBy(body);
-    if (found) return found;
     return this.phoneRepository.save(entity);
   }
 
-  //
   // deletePhone(): Promise<boolean> {
   //   return Promise.resolve(false);
   // }

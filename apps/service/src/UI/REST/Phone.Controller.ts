@@ -1,6 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Body, Controller, ConflictException, Post } from '@nestjs/common';
 
 import { PhoneEntity } from '@domain/Entities/Phone.Entity';
 import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
@@ -12,7 +10,18 @@ export class PhoneController {
   public constructor(private readonly phoneService: PhoneService) {}
 
   @Post()
-  public createPhone(@Body() body: CreatePhoneInput): Promise<PhoneEntity> {
-    return this.phoneService.createPhone(body);
+  public async createPhone(
+    @Body() body: CreatePhoneInput,
+  ): Promise<PhoneEntity> {
+    try {
+      const entity = await this.phoneService.createPhone(body);
+      return entity;
+    } catch (e) {
+      throw new ConflictException({
+        statusCode: -40000,
+        statusSymbol: 'DUPLICATE_PHONE_NUMBER',
+        message: 'Duplicate phone number',
+      });
+    }
   }
 }
