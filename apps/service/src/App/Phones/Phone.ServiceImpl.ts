@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { PhoneEntity } from '@domain/Entities/Phone.Entity';
 import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
+import { PhoneListVO } from '@domain/ValueObjects/PhoneList.VO';
+import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
 
 import { PhoneService } from './Phone.Service';
 
@@ -27,11 +29,24 @@ export class PhoneServiceImpl implements PhoneService {
   //   return Promise.resolve(undefined);
   // }
   //
-  // listPhones(): Promise<unknown[]> {
-  //   return Promise.resolve([]);
-  // }
-  //
+  async listPhones({
+    pageNumber = 1,
+    pageSize = 10,
+  }: ListPhonesInput): Promise<PhoneListVO> {
+    const [list, count] = await this.phoneRepository.findAndCount({
+      take: pageSize,
+      skip: (pageNumber - 1) * pageSize,
+    });
+    return new PhoneListVO(list, count);
+  }
+
   // updatePhone(): Promise<unknown> {
   //   return Promise.resolve(undefined);
   // }
 }
+
+// offset = (pageNumber - 1) * pageSize
+// limit = pageSize
+
+// skip = (pageNumber - 1) * pageSize
+// take = pageSize

@@ -17,8 +17,11 @@ POST {{host}}/phones
 Content-Type: application/json
 
 {
-  "phoneNumber": "+12096777520"
+  "phoneNumber": "+17207277520"
 }
+
+### 7207277520
+### 2096777520
 
 ### Retrieve a Phone
 

@@ -1,0 +1,41 @@
+
+### Get welcome
+GET {{host}}
+Content-Type: application/json
+
+
+# Phone
+
+### List Phones
+
+GET  {{host}}/messages
+Content-Type: application/json
+
+### Create a Phone
+
+POST {{host}}/messages
+Content-Type: application/json
+
+{
+  "receivedAt": "2023-10-20T06:12:02.894Z",
+  "content": "Your Via.Market verification code is 6555",
+  "form": "17207277520"
+}
+
+### 7207277520
+### 2096777520
+
+### Retrieve a Phone
+
+GET {{host}}/messages/:id
+Content-Type: application/json
+
+### Update a Phone
+
+PUT {{host}}/messages/:id
+Content-Type: application/json
+
+### Delete a Phone
+
+DELETE {{host}}/messages/:id
+Content-Type: application/json
