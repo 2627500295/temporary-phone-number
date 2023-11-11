@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PhoneController } from './Phone.Controller';
-import { PhoneProvider } from '../../App/Phones/Phone.Provider';
+import { NumberController } from './Number.Controller';
+import { ReceiveProvider } from '@app/Receives/Receive.Provider';
 
 describe('PhoneController', () => {
-  let phoneController: PhoneController;
+  let phoneController: NumberController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [PhoneController],
-      providers: [PhoneProvider],
+      controllers: [NumberController],
+      providers: [ReceiveProvider],
     }).compile();
 
-    phoneController = app.get<PhoneController>(PhoneController);
+    phoneController = app.get<NumberController>(NumberController);
   });
 
   // describe('root', () => {

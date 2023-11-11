@@ -2,17 +2,17 @@ import { Global, Module } from '@nestjs/common';
 
 import { HomeProvider } from '@app/Home/Home.Provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhoneEntity } from '@domain/Entities/Phone.Entity';
+import { ReceiveEntity } from '@domain/Entities/Receive.Entity';
 import { MessageEntity } from '@domain/Entities/Message.Entity';
 
-import { PhoneProvider } from './Phones/Phone.Provider';
+import { ReceiveProvider } from '@app/Receives/Receive.Provider';
 import { MessageProvider } from './Messages/Message.Provider';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([PhoneEntity, MessageEntity])],
+  imports: [TypeOrmModule.forFeature([ReceiveEntity, MessageEntity])],
   controllers: [],
-  providers: [HomeProvider, PhoneProvider, MessageProvider],
-  exports: [HomeProvider, PhoneProvider, MessageProvider],
+  providers: [HomeProvider, ReceiveProvider, MessageProvider],
+  exports: [HomeProvider, ReceiveProvider, MessageProvider],
 })
 export class AppModule {}

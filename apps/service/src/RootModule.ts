@@ -1,13 +1,16 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppModule } from './App/App.Module';
-
-import { PhoneController } from '@ui/REST/Phone.Controller';
+import { NumberController } from '@ui/REST/Number.Controller';
 import { MessageController } from '@ui/REST/Message.Controller';
 import { HomeController } from '@ui/REST/Home.Controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhoneEntity } from '@domain/Entities/Phone.Entity';
+
+import { ReceiveEntity } from '@domain/Entities/Receive.Entity';
 import { MessageEntity } from '@domain/Entities/Message.Entity';
+import { UserEntity } from '@domain/Entities/User.Entity';
+import { SendEntity } from '@domain/Entities/Send.Entity';
+
+import { AppModule } from './App/App.Module';
 
 @Module({
   imports: [
@@ -19,14 +22,14 @@ import { MessageEntity } from '@domain/Entities/Message.Entity';
       password: 'jXJCBHQq5kxyH6BPv',
       database: 'sms',
       entityPrefix: 'tpn_',
-      entities: [PhoneEntity, MessageEntity],
+      entities: [UserEntity, SendEntity, ReceiveEntity, MessageEntity],
       migrations: [],
       synchronize: true,
       logging: true,
     }),
     AppModule,
   ],
-  controllers: [HomeController, PhoneController, MessageController],
+  controllers: [HomeController, NumberController, MessageController],
   providers: [],
   exports: [],
 })

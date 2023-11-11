@@ -1,3 +1,16 @@
+
+
+# Numbers
+
+### Add a Phone Number
+
+POST {{host}}/numbers
+
+
+
+
+
+
 # Phone
 
 ### List Phones

@@ -6,15 +6,18 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('phone')
-export class PhoneEntity {
-  @PrimaryGeneratedColumn({ comment: 'ID' })
+@Entity('sends')
+export class SendEntity {
+  @PrimaryGeneratedColumn({ comment: 'Receive ID' })
   public id: number;
 
   @CreateDateColumn({ name: 'created_at', comment: 'Created time' })
   public createdAt: string;
 
   @Index('phone_number_index', { unique: true })
-  @Column({ name: 'phone', comment: 'phone number' })
+  @Column({ name: 'phone', comment: 'Phone number' })
   public phoneNumber: string;
+
+  @Column({ name: 'provider', comment: 'Provider' })
+  public provider: string;
 }

@@ -1,8 +1,8 @@
-import { PhoneEntity } from '@domain/Entities/Phone.Entity';
+import { ReceiveEntity } from '@domain/Entities/Receive.Entity';
 
 export class PhoneListVO {
   constructor(
-    public readonly list: PhoneEntity[],
+    public readonly list: ReceiveEntity[],
     public readonly count: number,
   ) {}
 }

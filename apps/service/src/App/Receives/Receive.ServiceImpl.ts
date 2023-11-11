@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { PhoneEntity } from '@domain/Entities/Phone.Entity';
+import { ReceiveEntity } from '@domain/Entities/Receive.Entity';
 import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
 import { PhoneListVO } from '@domain/ValueObjects/PhoneList.VO';
 import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
 
-import { PhoneService } from './Phone.Service';
+import { ReceiveService } from './Receive.Service';
 
 @Injectable()
-export class PhoneServiceImpl implements PhoneService {
+export class ReceiveServiceImpl implements ReceiveService {
   public constructor(
-    @InjectRepository(PhoneEntity)
-    private readonly phoneRepository: Repository<PhoneEntity>,
+    @InjectRepository(ReceiveEntity)
+    private readonly phoneRepository: Repository<ReceiveEntity>,
   ) {}
 
   public async createPhone(body: CreatePhoneInput): Promise<any> {

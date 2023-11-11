@@ -1,30 +1,36 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-} from '@nestjs/common';
-import { MessageService } from '@app/Messages/Message.Service';
-import { CreateMessageInput } from '@domain/DTOs/CreateMessage.Input';
-import { PhoneService } from '@app/Phones/Phone.Service';
-import { PhoneEntity } from '@domain/Entities/Phone.Entity';
+import { Controller, Post } from '@nestjs/common';
 
-@Controller('messages')
+import { MessageService } from '@app/Messages/Message.Service';
+import { ReceiveService } from '@app/Receives/Receive.Service';
+import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
+
+@Controller('sms')
 export class MessageController {
   public constructor(
     private readonly messageService: MessageService,
-    private readonly phoneService: PhoneService,
+    private readonly phoneService: ReceiveService,
   ) {}
 
-  @Post()
-  public async createMessage(
-    @Body() input: CreateMessageInput,
-    // @Param('phoneId', ParseIntPipe) phoneId: number,
-  ) {
-    // const phone = await this.phoneService.
-    const phone = { id: 1, phoneNumber: '17207277520' } as PhoneEntity;
-    return this.messageService.createMessage(input, phone);
+  /**
+   * Push Message
+   *
+   * https://onlinesim.io/openapi_docs/Reseller-API-UN/post/api_resellers_addMessage
+   *
+   * @param body
+   *
+   * @privateRemarks
+   * > **IMPORTANT NOTE!**
+   * >
+   * > 1
+   * >
+   * > 2
+   */
+  @Post('push')
+  public async push(body: PushMessageInput) {
+    return body;
   }
+
+  /**
+   *
+   */
 }

@@ -1,0 +1,17 @@
+{
+  "name": "@temporary-phone-number/workspace",
+  "version": "1.0.0",
+  "keywords": [],
+  "description": "",
+  "private": true,
+  "author": {
+    "name": "store",
+    "email": "admin@microlove.me",
+    "url": ""
+  },
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "UNLICENSED"
+}
