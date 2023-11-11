@@ -1,8 +1,9 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Delete, Post } from '@nestjs/common';
 
 import { ReceiveService } from '@app/Receives/Receive.Service';
 import { OnlineReportInput } from '@domain/DTOs/PhoneNumber/OnlineReport.Input';
-import { AddNumberInput } from '@domain/DTOs/PhoneNumber/AddNumberInput';
+import { AddNumberInput } from '@domain/DTOs/PhoneNumber/AddNumber.Input';
+import { RemoveNumberInput } from '@domain/DTOs/PhoneNumber/RemoveNumber.Input';
 
 @Controller('numbers')
 export class NumberController {
@@ -53,8 +54,9 @@ export class NumberController {
   public async add(body: AddNumberInput) {
     return body;
   }
-}
 
-// error instanceof QueryFailedError
-// error.driverError.code === '23505'
-// error.driverError.severity === 'ERROR'
+  @Delete('remove')
+  public async remove(query: RemoveNumberInput) {
+    return query;
+  }
+}

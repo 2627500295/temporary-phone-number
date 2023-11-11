@@ -2,45 +2,26 @@
 
 # Numbers
 
-### Add a Phone Number
-
-POST {{host}}/numbers
-
-
-
-
-
-
-# Phone
-
 ### List Phones
 
-GET  {{host}}/phones
+GET  {{host}}/numbers
 Content-Type: application/json
 
-### Create a Phone
+### Add a Phone Number
 
-POST {{host}}/phones
+POST {{host}}/numbers/add
 Content-Type: application/json
 
 {
-  "phoneNumber": "+17207277520"
+  "number": "+12096777520",
+  "countryCode": 1,
+  "operator": 320260,
+  "description": "",
+  "rent": 0
 }
 
-### 7207277520
-### 2096777520
+### Delete a Phone Number
 
-### Retrieve a Phone
-
-GET {{host}}/phones/:id
-Content-Type: application/json
-
-### Update a Phone
-
-PUT {{host}}/phones/:id
-Content-Type: application/json
-
-### Delete a Phone
-
-DELETE {{host}}/phones/:id
+DELETE {{host}}/numbers/remove?
+  phoneNumber=+2096777520
 Content-Type: application/json

@@ -13,14 +13,14 @@ export class AddNumberInput {
    *
    * @required
    */
-  country: string;
+  countryCode: number;
 
-  // /**
-  //  * Rent mode
-  //  *
-  //  * @required
-  //  */
-  // rent: NumberRent;
+  /**
+   * Rent mode
+   *
+   * @required
+   */
+  rent: NumberRent;
 
   /**
    * Operator Code
