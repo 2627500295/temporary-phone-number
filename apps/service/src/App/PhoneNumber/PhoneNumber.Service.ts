@@ -2,8 +2,11 @@ import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
 import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
 import { PhoneListVO } from '@domain/ValueObjects/PhoneList.VO';
 import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
+import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
+import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
 
-export abstract class ReceiveService {
+export abstract class PhoneNumberService {
   /**
    * Register a phone number to receive SMS
    *
@@ -23,10 +26,11 @@ export abstract class ReceiveService {
    *
    * @public
    */
-  abstract createPhone(body: CreatePhoneInput): Promise<PhoneNumberEntity>;
+  abstract createPhone(body: CreateNumberInput): Promise<PhoneNumberEntity>;
+
+  abstract reportOnline(body: ReportOnlineDTO): Promise<PhoneNumberEntity>;
 
   abstract listPhones(input: ListPhonesInput): Promise<PhoneListVO>;
-  // abstract getPhone(): Promise<ReceiveEntity>;
-  // abstract updatePhone(): Promise<ReceiveEntity>;
-  // abstract deletePhone(): Promise<boolean>;
+
+  abstract deletePhone(body: DeleteNumberDTO): Promise<boolean>;
 }

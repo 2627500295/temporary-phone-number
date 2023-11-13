@@ -14,8 +14,8 @@ async function bootstrap() {
     {
       logger: ['log', 'error', 'warn', 'debug', 'verbose', 'fatal'],
       // cors: true,
-      // bodyParser: true,
-      // rawBody: true,
+      bodyParser: true,
+      rawBody: true,
     },
   );
 

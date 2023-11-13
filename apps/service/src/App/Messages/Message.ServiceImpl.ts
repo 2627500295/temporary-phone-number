@@ -6,7 +6,7 @@ import { MessageEntity } from '@domain/Entities/Message.Entity';
 
 import { MessageService } from './Message.Service';
 import { CreateMessageInput } from '@domain/DTOs/CreateMessage.Input';
-import { ReceiveEntity } from '@domain/Entities/Receive.Entity';
+import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
 
 @Injectable()
 export class MessageServiceImpl implements MessageService {
@@ -17,7 +17,7 @@ export class MessageServiceImpl implements MessageService {
 
   async createMessage(
     input: CreateMessageInput,
-    phone: ReceiveEntity,
+    phone: PhoneNumberEntity,
   ): Promise<unknown> {
     const entity = this.messageRepository.create({
       ...input,

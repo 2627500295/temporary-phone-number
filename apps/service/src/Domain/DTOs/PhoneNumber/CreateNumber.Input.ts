@@ -1,12 +1,12 @@
-import { NumberRent } from './NumberRent';
+import { PhoneNumberRent } from './PhoneNumberRent.Enum';
 
-export class AddNumberInput {
+export class CreateNumberInput {
   /**
    * Number in international format (with `+` sign)
    *
    * @required
    */
-  number: string;
+  phoneNumber: string;
 
   /**
    * Country code
@@ -20,7 +20,7 @@ export class AddNumberInput {
    *
    * @required
    */
-  rent: NumberRent;
+  rent: PhoneNumberRent;
 
   /**
    * Operator Code

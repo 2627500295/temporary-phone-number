@@ -7,21 +7,31 @@
 GET  {{host}}/numbers
 Content-Type: application/json
 
-### Add a Phone Number
 
-POST {{host}}/numbers/add
+
+### Create a Phone Number
+
+POST {{host}}/numbers
 Content-Type: application/json
 
 {
-  "number": "+12096777520",
+  "phoneNumber": 12096777520,
   "countryCode": 1,
   "operator": 320260,
   "description": "",
   "rent": 0
 }
 
+### Phone Number Online Report
+
+POST {{host}}/numbers/12096777520/online
+Content-Type: application/json
+
+{
+  "number": 12096777520
+}
+
 ### Delete a Phone Number
 
-DELETE {{host}}/numbers/remove?
-  phoneNumber=+2096777520
+DELETE {{host}}/numbers/12096777520
 Content-Type: application/json

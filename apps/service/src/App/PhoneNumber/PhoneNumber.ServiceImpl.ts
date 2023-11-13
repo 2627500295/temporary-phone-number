@@ -3,28 +3,44 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
-import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
 import { PhoneListVO } from '@domain/ValueObjects/PhoneList.VO';
 import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
 
-import { ReceiveService } from './Receive.Service';
+import { PhoneNumberService } from './PhoneNumber.Service';
+import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
+import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
 
 @Injectable()
-export class ReceiveServiceImpl implements ReceiveService {
+export class PhoneNumberServiceImpl implements PhoneNumberService {
   public constructor(
     @InjectRepository(PhoneNumberEntity)
     private readonly phoneRepository: Repository<PhoneNumberEntity>,
   ) {}
 
-  public async createPhone(body: CreatePhoneInput): Promise<any> {
+  public async createPhone(body: CreateNumberInput): Promise<any> {
     const entity = this.phoneRepository.create(body);
     return this.phoneRepository.save(entity);
   }
 
-  // deletePhone(): Promise<boolean> {
-  //   return Promise.resolve(false);
-  // }
-  //
+  public async reportOnline(body: ReportOnlineDTO): Promise<any> {
+    const entity = await this.phoneRepository.findOneBy({
+      phoneNumber: `${body.phoneNumber}`,
+    });
+
+    const merged = this.phoneRepository.merge(entity, body);
+
+    return this.phoneRepository.save(merged);
+  }
+
+  async deletePhone(body: DeleteNumberDTO): Promise<boolean> {
+    await this.phoneRepository.delete({
+      phoneNumber: body.phoneNumber,
+    });
+
+    return true;
+  }
+
   // getPhone(): Promise<unknown> {
   //   return Promise.resolve(undefined);
   // }

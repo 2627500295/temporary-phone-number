@@ -1,4 +1,3 @@
 export class OnlineReportInput {
-  number: string;
-  country: number;
+  reportedAt?: string;
 }

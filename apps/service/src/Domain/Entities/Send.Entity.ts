@@ -14,7 +14,7 @@ export class SendEntity {
   @CreateDateColumn({ name: 'created_at', comment: 'Created time' })
   public createdAt: string;
 
-  @Index('phone_number_index', { unique: true })
+  @Index('number_index', { unique: true })
   @Column({ name: 'phone', comment: 'Phone number' })
   public phoneNumber: string;
 

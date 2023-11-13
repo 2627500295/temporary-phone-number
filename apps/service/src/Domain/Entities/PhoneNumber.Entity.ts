@@ -5,9 +5,10 @@ import {
   Index,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { PhoneNumberRent } from '@domain/DTOs/PhoneNumber/PhoneNumberRent.Enum';
 
-@Entity('receives')
-export class ReceiveEntity {
+@Entity('numbers')
+export class PhoneNumberEntity {
   @PrimaryGeneratedColumn({
     comment: 'ID',
   })
@@ -21,35 +22,45 @@ export class ReceiveEntity {
 
   @Index('phone_number_index', { unique: true })
   @Column({
-    name: 'number',
     comment: 'Phone number',
   })
   public phoneNumber: string;
 
-  @Index('country_code_index')
   @Column({
     comment: 'Country code',
   })
-  public country: number;
+  public countryCode: number;
 
   @Column({
     comment: 'Operator code',
+    nullable: true,
   })
   public operator: number;
 
   @Column({
     comment: 'Description',
+    default: '',
   })
   public description: string;
 
   @Column({
     comment: 'Rent mode',
+    default: PhoneNumberRent.DISABLED,
   })
-  public rent: string;
+  public rent: number;
+
+  @Column({
+    comment: 'Last online date',
+    type: 'timestamp',
+    default: null,
+    nullable: true,
+  })
+  public reportedAt: string;
 
   @Column({
     name: 'provider',
     comment: 'Number provider',
+    nullable: true,
   })
   public user: number;
 }
