@@ -11,17 +11,17 @@ import { PhoneNumberProvider } from '@app/PhoneNumber/PhoneNumber.Provider';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([PhoneNumberEntity, MessageEntity])],
+  // imports: [TypeOrmModule.forFeature([PhoneNumberEntity, MessageEntity])],
   controllers: [],
   providers: [
     HomeProvider,
-    PhoneNumberProvider,
+    // PhoneNumberProvider,
     // ReceiveProvider,
     // MessageProvider,
   ],
   exports: [
     HomeProvider,
-    PhoneNumberProvider,
+    // PhoneNumberProvider,
     // ReceiveProvider,
     // MessageProvider,
   ],
