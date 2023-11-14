@@ -1,28 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "buildCommand": "nest build",
-  "devCommand": "nest start --watch",
-  "installCommand": "pnpm install --no-frozen-lockfile",
-  "outputDirectory": "dist",
-  "framework": null,
-  "public": true,
-  "trailingSlash": false,
-  "cleanUrls": false,
   "builds": [
     {
       "src": "src/main.ts",
       "use": "@vercel/node"
-    },
-    {
-      "src": "node_modules/swagger-ui-dist/*",
-      "use": "@vercel/static"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "src/main.ts"
+      "src": "/(.*)",
+      "dest": "/src/main.ts"
     }
   ],
   "headers": [
