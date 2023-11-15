@@ -12,14 +12,16 @@ export class MessageEntity {
   })
   public receivedAt: string;
 
-  @Column({ comment: 'Message content' })
+  @Column({
+    comment: 'Message content',
+  })
   public content: string;
 
   @Column()
-  public form: string;
+  public phoneNumber: string;
 
   @Column()
-  public to: string;
+  public form: string;
 
   @Column()
   public phoneId: number;

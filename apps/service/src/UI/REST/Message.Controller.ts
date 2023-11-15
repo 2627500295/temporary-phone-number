@@ -1,14 +1,15 @@
 import { Controller, Post } from '@nestjs/common';
 
 import { MessageService } from '@app/Messages/Message.Service';
-import { ReceiveService } from '@app/Receives/Receive.Service';
+import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
+
 import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
 
 @Controller('sms')
 export class MessageController {
   public constructor(
     private readonly messageService: MessageService,
-    private readonly phoneService: ReceiveService,
+    private readonly phoneNumberService: PhoneNumberService,
   ) {}
 
   /**
