@@ -7,9 +7,8 @@
 GET  {{host}}/numbers
 Content-Type: application/json
 
-
-
 ### Create a Phone Number
+### 17207277520 / 12096777520
 
 POST {{host}}/numbers
 Content-Type: application/json
