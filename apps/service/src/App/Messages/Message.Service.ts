@@ -1,13 +1,10 @@
-import { CreateMessageInput } from '@domain/DTOs/CreateMessage.Input';
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
+import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
+import { MessageEntity } from '@domain/Entities/Message.Entity';
 
 export abstract class MessageService {
-  abstract createMessage(
-    input: CreateMessageInput,
-    phone: PhoneNumberEntity,
-  ): Promise<unknown>;
-  abstract listMessages(): Promise<unknown[]>;
-  abstract getMessage(): Promise<unknown>;
-  abstract updateMessage(): Promise<unknown>;
-  abstract deleteMessage(): Promise<boolean>;
+  abstract createMessage(input: PushMessageInput): Promise<MessageEntity>;
+  // abstract listMessages(): Promise<unknown[]>;
+  // abstract getMessage(): Promise<unknown>;
+  // abstract updateMessage(): Promise<unknown>;
+  // abstract deleteMessage(): Promise<boolean>;
 }

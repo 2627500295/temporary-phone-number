@@ -8,13 +8,13 @@ GET  {{host}}/numbers
 Content-Type: application/json
 
 ### Create a Phone Number
-### 17207277520 / 12096777520
+### 17207277520 / 12096777520 / 18037951555
 
 POST {{host}}/numbers
 Content-Type: application/json
 
 {
-  "phoneNumber": 12096777520,
+  "phoneNumber": 18037951555,
   "countryCode": 1,
   "operator": 320260,
   "description": "",

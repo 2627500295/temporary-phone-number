@@ -22,7 +22,4 @@ export class MessageEntity {
 
   @Column()
   public form: string;
-
-  @Column()
-  public phoneId: number;
 }
