@@ -1,9 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Sse } from '@nestjs/common';
 
 import { MessageService } from '@app/Messages/Message.Service';
 import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
 
 import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
+import { Observable } from 'rxjs';
 
 @Controller('messages')
 export class MessageController {
@@ -11,6 +12,10 @@ export class MessageController {
     private readonly messageService: MessageService,
     private readonly phoneNumberService: PhoneNumberService,
   ) {}
+
+  // SSE
+  // https://medium.com/using-nestjs-sse-for-updating-front-end/backend-implementation-cedd3801c210
+  // private eventEmitter: EventEmitter2,
 
   /**
    * Push Message
@@ -29,6 +34,11 @@ export class MessageController {
   @Post('push')
   public async push(@Body() input: PushMessageInput) {
     return this.messageService.createMessage(input);
+  }
+
+  @Sse(':phoneNumber')
+  sse(): Observable<MessageEvent> {
+    return;
   }
 
   /**
