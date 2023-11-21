@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 import { PhoneNumberController } from '@ui/REST/PhoneNumber.Controller';
 import { HomeController } from '@ui/REST/Home.Controller';
@@ -35,6 +36,8 @@ import { AppModule } from './App/App.Module';
       synchronize: true,
       logging: true,
     }),
+
+    EventEmitterModule.forRoot({ global: true }),
 
     /** Application Module */
     AppModule,

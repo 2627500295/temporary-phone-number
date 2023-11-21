@@ -4,13 +4,16 @@ import { MessageService } from '@app/Messages/Message.Service';
 import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
 
 import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
-import { Observable } from 'rxjs';
+import { fromEvent, map, Observable } from 'rxjs';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { MessagePushedEvent } from '@ui/Events/MessagePushed.Event';
 
 @Controller('messages')
 export class MessageController {
   public constructor(
     private readonly messageService: MessageService,
     private readonly phoneNumberService: PhoneNumberService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   // SSE
@@ -33,12 +36,29 @@ export class MessageController {
    */
   @Post('push')
   public async push(@Body() input: PushMessageInput) {
-    return this.messageService.createMessage(input);
+    const message = await this.messageService.createMessage(input);
+
+    this.eventEmitter.emit(
+      'message.pushed',
+      new MessagePushedEvent({
+        content: message.content,
+        phoneNumber: message.phoneNumber,
+        from: message.form,
+        receivedAt: message.receivedAt,
+      }),
+    );
+
+    return message;
   }
 
   @Sse(':phoneNumber')
   sse(): Observable<MessageEvent> {
-    return;
+    return fromEvent(this.eventEmitter, 'message.pushed').pipe(
+      map((data) => {
+        console.log(data);
+        return new MessageEvent<any>('', { data: {} });
+      }),
+    );
   }
 
   /**
