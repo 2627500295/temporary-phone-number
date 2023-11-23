@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessageController } from './Message.Controller';
-import { MessageProvider } from '../../App/Messages/Message.Provider';
+import { MessageProvider } from '@app/Messages/Message.Provider';
 
 describe('MessageController', () => {
   let messageController: MessageController;
@@ -14,9 +14,9 @@ describe('MessageController', () => {
     messageController = app.get<MessageController>(MessageController);
   });
 
-  // describe('root', () => {
-  //   it('should return "Hello World!"', () => {
-  //     expect(messageController.getHello()).toBe('Hello World!');
-  //   });
-  // });
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(messageController.push({} as any)).toBe('Hello World!');
+    });
+  });
 });

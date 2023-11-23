@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PhoneNumberController } from './PhoneNumber.Controller';
-import { ReceiveProvider } from '@app/Receives/Receive.Provider';
+import { PhoneNumberProvider } from '@app/PhoneNumber/PhoneNumber.Provider';
 
 describe('PhoneController', () => {
   let phoneController: PhoneNumberController;
@@ -8,15 +8,15 @@ describe('PhoneController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [PhoneNumberController],
-      providers: [ReceiveProvider],
+      providers: [PhoneNumberProvider],
     }).compile();
 
     phoneController = app.get<PhoneNumberController>(PhoneNumberController);
   });
 
-  // describe('root', () => {
-  //   it('should return "Hello World!"', () => {
-  //     expect(phoneController.getHello()).toBe('Hello World!');
-  //   });
-  // });
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(phoneController.createPhoneNumber({} as any)).toBe('Hello World!');
+    });
+  });
 });
