@@ -2,12 +2,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('messages')
 export class MessageEntity {
-  @PrimaryGeneratedColumn({ comment: 'ID' })
+  @PrimaryGeneratedColumn({
+    comment: 'Message ID',
+  })
   public id: number;
 
   @Column({
+    comment: 'Message received date',
     name: 'received_at',
-    comment: 'Received time',
     type: 'timestamp',
   })
   public receivedAt: string;
@@ -17,9 +19,13 @@ export class MessageEntity {
   })
   public content: string;
 
-  @Column()
+  @Column({
+    comment: 'Message receiving phone number',
+  })
   public phoneNumber: string;
 
-  @Column()
+  @Column({
+    comment: 'Message sending phone number',
+  })
   public form: string;
 }

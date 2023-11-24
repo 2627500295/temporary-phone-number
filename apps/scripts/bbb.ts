@@ -38,7 +38,7 @@ function JSONParse(str, value = {}) {
 }
 
 /** 发送邮件 */
-function sendEmail(to, subject = '', htmlBody = '') {
+function sendEmail(to, subject = "", htmlBody = "") {
   return MailApp.sendEmail({ to, subject, htmlBody });
 }
 
@@ -73,7 +73,7 @@ function parseMessage(message) {
 /** 获取上报在线状态未读邮件 */
 function listUnreadMails() {
   return GmailApp.search(
-    'is:unread from:(@txt.voice.google.com) report-phone-number-online',
+    "is:unread from:(@txt.voice.google.com) report-phone-number-online",
   ) // 检索 未读 来自txt.voice.google.com的邮件 不包含report-phone-number-online
     .reduce((acc, thread) => {
       const messages = thread
@@ -81,7 +81,7 @@ function listUnreadMails() {
         .filter(
           (message) =>
             message.isUnread() &&
-            message.getPlainBody().includes('report-phone-number-online'),
+            message.getPlainBody().includes("report-phone-number-online"),
         )
         .sort((a, b) => a.getDate().getTime() - b.getDate().getTime());
 
@@ -108,9 +108,9 @@ function main() {
         },
       });
 
-      UrlFetchApp.fetch('https://httpbin.org/post', {
-        method: 'post',
-        contentType: 'application/json',
+      UrlFetchApp.fetch("https://httpbin.org/post", {
+        method: "post",
+        contentType: "application/json",
         payload: JSON.stringify({
           phoneNumber: source,
           reportedAt: date,
@@ -121,8 +121,8 @@ function main() {
       // 回复邮件
       MailApp.sendEmail({
         to: from,
-        subject: '',
-        htmlBody: 'Report success',
+        subject: "",
+        htmlBody: "Report success",
       });
 
       message.markRead();

@@ -12,6 +12,7 @@ async function bootstrap() {
     logger: ['log', 'error', 'warn', 'debug', 'verbose', 'fatal'],
     bodyParser: true,
     rawBody: true,
+    cors: true,
   });
 
   await app.listen(8080, '0.0.0.0');

@@ -24,12 +24,8 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
   }
 
   public async reportOnline(body: ReportOnlineDTO): Promise<any> {
-    const entity = await this.phoneRepository.findOneBy({
-      phoneNumber: `${body.phoneNumber}`,
-    });
-
+    const entity = await this.phoneRepository.findOneBy({ phoneNumber: body.phoneNumber });
     const merged = this.phoneRepository.merge(entity, body);
-
     return this.phoneRepository.save(merged);
   }
 
@@ -45,10 +41,7 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
   //   return Promise.resolve(undefined);
   // }
   //
-  async listPhones({
-    pageNumber = 1,
-    pageSize = 10,
-  }: ListPhonesInput): Promise<PhoneListVO> {
+  async listPhones({ pageNumber = 1, pageSize = 10 }: ListPhonesInput): Promise<PhoneListVO> {
     const [list, count] = await this.phoneRepository.findAndCount({
       take: pageSize,
       skip: (pageNumber - 1) * pageSize,

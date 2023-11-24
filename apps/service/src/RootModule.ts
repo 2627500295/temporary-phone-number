@@ -11,10 +11,12 @@ import { MessageEntity } from '@domain/Entities/Message.Entity';
 import { MessageController } from '@ui/REST/Message.Controller';
 import { PhoneNumberController } from '@ui/REST/PhoneNumber.Controller';
 import { HomeController } from '@ui/REST/Home.Controller';
+import { ProviderEntity } from '@domain/Entities/Provider.Entity';
 
 import { AppModule } from './App/App.Module';
 
 @Module({
+  controllers: [HomeController, PhoneNumberController, MessageController],
   imports: [
     /** TypeORM */
     TypeOrmModule.forRoot({
@@ -34,18 +36,20 @@ import { AppModule } from './App/App.Module';
       database: 'db5d1d13936c3c41f782375101573714b9common',
 
       entityPrefix: 'tpn_',
-      entities: [PhoneNumberEntity, MessageEntity],
+      entities: [PhoneNumberEntity, MessageEntity, ProviderEntity],
       migrations: [],
       synchronize: true,
       logging: true,
     }),
 
-    EventEmitterModule.forRoot({ global: true }),
+    /** EventEmitter */
+    EventEmitterModule.forRoot({
+      global: true,
+    }),
 
     /** Application Module */
     AppModule,
   ],
-  controllers: [HomeController, PhoneNumberController, MessageController],
   providers: [
     {
       provide: APP_FILTER,

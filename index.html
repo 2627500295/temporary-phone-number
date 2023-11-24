@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <script type="text/javascript">
+    function isSupportNotification() {
+      return "Notification" in window;
+    }
+
+    function isGrantedPermission() {
+      return Notification.permission === 'granted';
+    }
+
+    function isDeniedPermission() {
+      return Notification.permission === 'denied';
+    }
+
+    function isDefaultPermission() {
+      return Notification.permission === 'default';
+    }
+
+    function getIntlPhoneNumber(phoneNumber) {
+      return `+${phoneNumber}`
+    }
+
+    function sendNotification({title, ...options}) {
+      return new Notification(title, options)
+    }
+
+    function appendMessage({phoneNumber, from, content}) {
+      const message = document.createElement('li');
+      message.innerText = `from: ${from}; to: ${phoneNumber}; message: ${content};`;
+      document.body.appendChild(message);
+    }
+
+    /** @param event {MessageEvent} - Event */
+    async function handleMessageEvent(event) {
+      const data = JSON.parse(event.data);
+
+      if (isGrantedPermission()) {
+        sendNotification({
+          title: getIntlPhoneNumber(data.from),
+          body: data.content,
+          renotify: true,
+          tag: 'sms'
+        });
+      }
+
+      appendMessage(data);
+    }
+
+    (async function bootstrap() {
+      if (isDefaultPermission()) {
+        await Notification.requestPermission();
+      }
+
+      const eventSource = new EventSource('http://127.0.0.1:8080/messages/17207277520');
+      eventSource.addEventListener("message", handleMessageEvent);
+    })();
+  </script>
+</head>
+<body>
+  <div>111</div>
+</body>
+</html>

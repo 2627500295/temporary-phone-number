@@ -41,10 +41,7 @@ export class PhoneNumberController {
    * > 2
    */
   @Post(':phoneNumber/online')
-  public async reportPhoneNumberOnline(
-    @Param('phoneNumber') phoneNumber: string,
-    @Body() body: OnlineReportInput,
-  ) {
+  public async reportPhoneNumberOnline(@Param('phoneNumber') phoneNumber: string, @Body() body: OnlineReportInput) {
     const reportOnlineDTO: ReportOnlineDTO = {
       phoneNumber,
       reportedAt: body.reportedAt ?? new Date().toISOString(),

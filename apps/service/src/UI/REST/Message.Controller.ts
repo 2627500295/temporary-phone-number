@@ -1,10 +1,10 @@
-import { Body, Controller, Post, Sse } from '@nestjs/common';
+import { Body, Controller, Param, Post, Sse } from '@nestjs/common';
 
 import { MessageService } from '@app/Messages/Message.Service';
 import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
 
 import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
-import { fromEvent, map, Observable } from 'rxjs';
+import { fromEvent, map, Observable, filter } from 'rxjs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { MessagePushedEvent } from '@ui/Events/MessagePushed.Event';
 
@@ -52,11 +52,14 @@ export class MessageController {
   }
 
   @Sse(':phoneNumber')
-  sse(): Observable<MessageEvent> {
+  sse(@Param('phoneNumber') phoneNumber: string): Observable<MessageEvent> {
     return fromEvent(this.eventEmitter, 'message.pushed').pipe(
+      filter((data: any) => {
+        console.log(data, phoneNumber);
+        return data.phoneNumber === phoneNumber;
+      }),
       map((data) => {
-        console.log(data);
-        return new MessageEvent<any>('', { data: {} });
+        return new MessageEvent<any>('message', { data });
       }),
     );
   }
