@@ -4,7 +4,9 @@ import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
 import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
 import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
 import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Phone Number')
 @Controller('numbers')
 export class PhoneNumberController {
   public constructor(private readonly phoneNumber: PhoneNumberService) {}

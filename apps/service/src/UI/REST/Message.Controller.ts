@@ -7,7 +7,9 @@ import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
 import { fromEvent, map, Observable, filter } from 'rxjs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { MessagePushedEvent } from '@ui/Events/MessagePushed.Event';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('SMS')
 @Controller('messages')
 export class MessageController {
   public constructor(
