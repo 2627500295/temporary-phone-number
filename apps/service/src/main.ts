@@ -18,8 +18,10 @@ async function bootstrap() {
     cors: true,
   });
 
+  // Set Global Prefix
   application.setGlobalPrefix('api');
 
+  // Enable Versioning
   application.enableVersioning({
     type: VersioningType.URI,
     prefix: 'v',
