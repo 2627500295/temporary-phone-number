@@ -87,3 +87,6 @@ const nextConfig = {
 process.env.__NEXT_PRIVATE_STANDALONE_CONFIG = JSON.stringify(nextConfig)
 
 ```
+
+
+https://assets.codepenassets.com/fonts/dank-mono.css

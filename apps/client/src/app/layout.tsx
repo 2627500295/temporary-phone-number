@@ -5,6 +5,7 @@ import { Document, WebVitals, RootProviders } from "@website/components/";
 
 import "@website/styles/globals.css";
 import "@website/styles/tailwind.css";
+import "@website/styles/dmvendor.css";
 
 export const metadata: Metadata = {
   title: "Temporary phone number",

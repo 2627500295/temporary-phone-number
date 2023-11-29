@@ -6,7 +6,8 @@ import {
   BUILD_DATE,
   COMMIT_ID,
 } from "@website/constants";
-import { inter } from "@website/fonts";
+import { inter, firaCode, dmMono } from "@website/fonts";
+import clsx from "clsx";
 
 export function Document({
   children,
@@ -20,7 +21,11 @@ export function Document({
       data-build-date={BUILD_DATE}
       data-commit-id={COMMIT_ID}
     >
-      <body className={inter.className}>{children}</body>
+      <body
+        className={clsx(inter.className, firaCode.className, dmMono.className)}
+      >
+        {children}
+      </body>
     </html>
   );
 }
