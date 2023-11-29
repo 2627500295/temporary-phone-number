@@ -4,7 +4,6 @@ import { RootModule } from './RootModule';
 import fastify from 'fastify';
 import { VersioningType } from '@nestjs/common';
 import { customBanner } from '@infra/Utils/customBanner';
-import * as process from 'process';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
