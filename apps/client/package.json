@@ -1,13 +1,7 @@
 {
-  "name": "@temporary-phone-number/client",
-  "version": "0.0.1",
-  "description": "",
+  "name": "@tpn/website",
+  "version": "0.1.0",
   "private": true,
-  "author": {
-    "name": "store",
-    "email": "admin@microlove.me",
-    "url": ""
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,27 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.8.1",
-    "@tanstack/react-query-devtools": "^5.8.1",
-    "@tanstack/react-query-next-experimental": "^5.8.1",
-    "clsx": "^2.0.0",
-    "jotai": "^2.5.1",
-    "next": "^14.0.2",
-    "next-intl": "^2.22.1",
+    "@tanstack/react-query": "^5.8.9",
+    "@tanstack/react-query-devtools": "^5.8.9",
+    "@tanstack/react-query-next-experimental": "^5.8.9",
+    "next": "^14.0.3",
+    "next-intl": "^3.1.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.3.5",
-    "usehooks-ts": "^2.9.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.9.0",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
     "autoprefixer": "^10.4.16",
-    "eslint": "^8.53.0",
-    "eslint-config-next": "^14.0.2",
+    "eslint": "^8.54.0",
+    "eslint-config-next": "^14.0.3",
     "postcss": "^8.4.31",
-    "typescript": "^5.2.2"
-  },
-  "license": "UNLICENSED"
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.3.2"
+  }
 }
