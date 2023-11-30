@@ -1,6 +1,6 @@
 ### Push Message
 
-POST {{host}}/messages/push
+POST {{host}}/api/messages/push
 Content-Type: application/json
 
 {

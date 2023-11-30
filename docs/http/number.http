@@ -4,13 +4,18 @@
 
 ### List Phones
 
-GET  {{host}}/numbers
+GET  {{host}}/api/numbers
+Content-Type: application/json
+
+### List Online Phones
+
+GET  {{host}}/api/numbers/online
 Content-Type: application/json
 
 ### Create a Phone Number
 ### 17207277520 / 12096777520 / 18037951555
 
-POST {{host}}/numbers
+POST {{host}}/api/numbers
 Content-Type: application/json
 
 {
@@ -23,7 +28,7 @@ Content-Type: application/json
 
 ### Phone Number Online Report
 
-POST {{host}}/numbers/12096777520/online
+POST {{host}}/api/numbers/12096777520/online
 Content-Type: application/json
 
 {
@@ -32,5 +37,5 @@ Content-Type: application/json
 
 ### Delete a Phone Number
 
-DELETE {{host}}/numbers/12096777520
+DELETE {{host}}/api/numbers/12096777520
 Content-Type: application/json

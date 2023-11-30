@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { FindOperator, Repository, Raw, Not, LessThan, MoreThan, MoreThanOrEqual } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
@@ -41,11 +41,21 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
   //   return Promise.resolve(undefined);
   // }
   //
-  async listPhones({ pageNumber = 1, pageSize = 10 }: ListPhonesInput): Promise<PhoneListVO> {
+  async listPhones({ pageNumber = 1, pageSize = 10, isOnline = false }: ListPhonesInput): Promise<PhoneListVO> {
     const [list, count] = await this.phoneRepository.findAndCount({
-      take: pageSize,
       skip: (pageNumber - 1) * pageSize,
+      take: pageSize,
+      where: {
+        // https://typeorm.io/find-options
+
+        ...(isOnline
+          ? {
+              reportedAt: Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`),
+            }
+          : undefined),
+      },
     });
+
     return new PhoneListVO(list, count);
   }
 
