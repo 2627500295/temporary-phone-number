@@ -1,7 +1,14 @@
+import { IsDate, IsOptional, IsPhoneNumber } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+
 export class OnlineReportInput {
-  /** 报告时间 */
+  @ApiProperty()
+  @IsDate()
+  @IsOptional()
   reportedAt?: string;
 
-  /** 报告来源 */
+  @ApiProperty()
+  @IsPhoneNumber()
+  @IsOptional()
   from?: string;
 }
