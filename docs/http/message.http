@@ -6,6 +6,6 @@ Content-Type: application/json
 {
   "receivedAt": "2023-10-20T06:12:02.894Z",
   "content": "Your Via.Market verification code is 6555",
-  "form": "18037951555",
+  "from": "18037951555",
   "phoneNumber": "17207277520"
 }

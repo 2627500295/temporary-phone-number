@@ -27,5 +27,5 @@ export class MessageEntity {
   @Column({
     comment: 'Message sending phone number',
   })
-  public form: string;
+  public from: string;
 }

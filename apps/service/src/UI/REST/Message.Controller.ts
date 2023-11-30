@@ -45,7 +45,7 @@ export class MessageController {
       new MessagePushedEvent({
         content: message.content,
         phoneNumber: message.phoneNumber,
-        from: message.form,
+        from: message.from,
         receivedAt: message.receivedAt,
       }),
     );
