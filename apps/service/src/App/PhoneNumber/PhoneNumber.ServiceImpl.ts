@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { FindOperator, Repository, Raw, Not, LessThan, MoreThan, MoreThanOrEqual } from 'typeorm';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Raw, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
@@ -10,6 +10,7 @@ import { PhoneNumberService } from './PhoneNumber.Service';
 import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
 import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
 import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
+import { BusinessError } from '@infra/Enums/BusinessError.Enum';
 
 @Injectable()
 export class PhoneNumberServiceImpl implements PhoneNumberService {
@@ -19,6 +20,8 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
   ) {}
 
   public async createPhone(body: CreateNumberInput): Promise<any> {
+    const found = await this.phoneRepository.findOneBy({ phoneNumber: body.phoneNumber });
+    if (found) throw new BadRequestException(BusinessError.PHONE_NUMBER_DUPLICATE);
     const entity = this.phoneRepository.create(body);
     return this.phoneRepository.save(entity);
   }
