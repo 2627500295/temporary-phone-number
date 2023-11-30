@@ -3,6 +3,15 @@
 POST {{host}}/api/messages/push
 Content-Type: application/json
 
+{ "receivedAt": "2023-11-30T07:52:58.713Z",
+  "content": "Your Pear.us verification code is 8690",
+  "from": "16506006881",
+  "phoneNumber": "12096777520" }
+
+###
+POST {{host}}/api/messages/push
+Content-Type: application/json
+
 {
   "receivedAt": "2023-10-20T06:12:02.894Z",
   "content": "Your Via.Market verification code is 6555",
