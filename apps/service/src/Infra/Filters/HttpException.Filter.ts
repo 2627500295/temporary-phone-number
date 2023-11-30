@@ -2,7 +2,19 @@ import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/co
 
 import { Response } from 'express';
 
-import { ExceptionResponse, getExceptionResponse } from '../Utils/getExceptionResponse';
+export type ExceptionResponse<T = unknown> = T & {
+  code?: number | `${number}`;
+  symbol?: string;
+  message: string;
+};
+
+export type ExceptionResponseWithData = ExceptionResponse<{ data: any }>;
+
+export function getExceptionResponse<T extends ExceptionResponse = ExceptionResponse>(exception: HttpException): T {
+  const exceptionResponse = exception.getResponse() as string | T;
+  if (typeof exceptionResponse === 'string') return { message: exceptionResponse } as T;
+  return exceptionResponse;
+}
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -11,21 +23,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const httpStatus = exception.getStatus();
-    const {
-      statusCode = httpStatus,
+    const statusCode = exception.getStatus();
+    const { code = statusCode, message, data } = getExceptionResponse<ExceptionResponseWithData>(exception);
+
+    response.status(statusCode).json({
+      code,
       message,
       data,
-    } = getExceptionResponse<ExceptionResponse<{ data: any }>>(exception);
-
-    response.status(httpStatus).json({
-      statusCode,
-      message,
-      data: {
-        ...data,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      },
+      timestamp: new Date().toISOString(),
+      path: request.url,
     });
   }
 }
