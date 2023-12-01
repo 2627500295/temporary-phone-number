@@ -39,3 +39,13 @@ Content-Type: application/json
 
 DELETE {{host}}/api/numbers/12096777520
 Content-Type: application/json
+
+###
+
+POST {{host}}/api/numbers/18037951555/online
+Content-Type: application/json
+
+{
+  "reportedAt": "2023-12-01T08:02:07.022Z",
+  "from": "12096777520"
+}

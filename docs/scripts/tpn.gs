@@ -228,7 +228,7 @@ class MailHelper {
     content = "report-phone-number-online",
   ) {
     const plainBody = message.getPlainBody();
-    return plainBody.includes(content);
+    return new RegExp(content).test(plainBody);
   }
 
   /**
@@ -294,7 +294,9 @@ class MailHelper {
   static listUnreadMessages(search) {
     return GmailApp.search(search)
       .reduce((acc, thread) => {
-        return acc.concat(MailHelper.getUnreadMessagesByThread(thread));
+        const messages = MailHelper.getUnreadMessagesByThread(thread);
+        acc.push(...messages);
+        return acc;
       }, [])
       .sort(MailHelper.sortMessagesAccordingByDate);
   }
@@ -348,9 +350,9 @@ function pushMessage() {
   const search =
     "is:unread from:(@txt.voice.google.com) -{report-phone-number-online}";
 
-  const list = MailHelper.listUnreadMessages(search).filter(
-    MailHelper.excludeReportOnlineMessage,
-  );
+  const list = MailHelper
+    .listUnreadMessages(search)
+    .filter((message) => MailHelper.excludeReportOnlineMessage(message));
 
   MailHelper.unreadMessagesHandler(
     list,
@@ -376,15 +378,15 @@ function reportOnlineAgent() {
   const search =
     "is:unread from:(@txt.voice.google.com) report-phone-number-online";
 
-  const list = MailHelper.listUnreadMessages(search).filter(
-    MailHelper.includeReportOnlineMessage,
-  );
+  const list = MailHelper
+    .listUnreadMessages(search)
+    .filter((message) => MailHelper.includeReportOnlineMessage(message));
 
   MailHelper.unreadMessagesHandler(list, ({ content, receiver, sender }) => {
     const data = {
       reportedAt: JSONParse(content).receivedAt ?? new Date().toISOString(),
       from: receiver,
-    };
+    }
 
     const response = TpnService.post(`/api/numbers/${sender}/online`, data);
 

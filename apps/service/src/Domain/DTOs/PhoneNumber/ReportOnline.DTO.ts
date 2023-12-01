@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class ReportOnlineDTO {
   @ApiProperty()
@@ -8,6 +9,7 @@ export class ReportOnlineDTO {
 
   @ApiProperty()
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   @IsOptional()
   reportedAt: string;
 }
