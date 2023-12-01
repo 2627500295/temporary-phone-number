@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsOptional, IsPhoneNumber } from 'class-validator';
+import { IsDate, IsOptional, IsString } from 'class-validator';
 
 export class ReportOnlineDTO {
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber: string;
 
   @ApiProperty()

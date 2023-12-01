@@ -58,7 +58,10 @@ import { AppModule } from './App/App.Module';
 
     {
       provide: APP_PIPE,
-      useValue: new ValidationPipe({ whitelist: true, transform: true }),
+      useValue: new ValidationPipe({
+        whitelist: true,
+        transform: true,
+      }),
     },
   ],
   exports: [],

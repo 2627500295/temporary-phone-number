@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsPhoneNumber } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreatePhoneInput {
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber: string;
 }

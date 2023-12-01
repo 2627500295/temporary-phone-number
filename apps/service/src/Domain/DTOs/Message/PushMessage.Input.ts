@@ -1,15 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import { IsDate, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class PushMessageInput {
   /** 手机号码 */
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber: string;
 
   /** 来源 */
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   from: string;
 
   /** 内容 */
@@ -20,6 +21,7 @@ export class PushMessageInput {
   /** 收取时间 */
   @ApiProperty()
   @IsDate()
+  @Transform(({ value }) => new Date(value))
   @IsOptional()
   receivedAt?: string;
 }

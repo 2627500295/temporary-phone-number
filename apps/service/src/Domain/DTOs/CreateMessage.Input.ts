@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsPhoneNumber, IsString } from 'class-validator';
+import { IsDate, IsString } from 'class-validator';
 
 export class CreateMessageInput {
   @ApiProperty()
@@ -11,6 +11,6 @@ export class CreateMessageInput {
   public content: string;
 
   @ApiProperty()
-  @IsPhoneNumber()
+  @IsString()
   public from: string;
 }

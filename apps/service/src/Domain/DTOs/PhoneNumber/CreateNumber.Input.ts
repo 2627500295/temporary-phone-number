@@ -1,5 +1,5 @@
 import { PhoneNumberRent } from './PhoneNumberRent.Enum';
-import { IsEnum, Length, IsNumber, IsOptional, IsPhoneNumber, Min, IsString } from 'class-validator';
+import { IsEnum, Length, IsNumber, IsOptional, Min, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateNumberInput {
@@ -9,7 +9,7 @@ export class CreateNumberInput {
     type: String,
     examples: ['12096777520', '8615347033520'],
   })
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber: string;
 
   @ApiProperty({
