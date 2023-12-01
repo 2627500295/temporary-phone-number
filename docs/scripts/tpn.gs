@@ -120,7 +120,9 @@ class MailHelper {
    */
   static sendEmail(to, subject, htmlBody) {
     try {
-      MailApp.sendEmail({ to, subject, htmlBody });
+      const body = { to, subject, htmlBody }
+      MailApp.sendEmail(body);
+      Logger.log(JSON.stringify(body));
     } catch (e) {
       Logger.log(`\nError: \n    Mssage: ${e.message}\n`);
     }
@@ -218,33 +220,6 @@ class MailHelper {
   }
 
   /**
-   * 包含报告在线状态
-   *
-   * @param message - 消息
-   * @return {boolean}
-   */
-  static includeReportOnlineMessage(
-    message,
-    content = "report-phone-number-online",
-  ) {
-    const plainBody = message.getPlainBody();
-    return new RegExp(content).test(plainBody);
-  }
-
-  /**
-   * 排除报告在线状态
-   *
-   * @param message - 消息
-   * @return {boolean}
-   */
-  static excludeReportOnlineMessage(
-    message,
-    content = "report-phone-number-online",
-  ) {
-    return !MailHelper.includeReportOnlineMessage(message, content);
-  }
-
-  /**
    * 从消息获取时间
    *
    * @param message - 消息
@@ -263,17 +238,6 @@ class MailHelper {
    */
   static sortMessagesAccordingByDate(a, b) {
     return MailHelper.getTimeByMessage(a) - MailHelper.getTimeByMessage(b);
-  }
-
-  /**
-   * 时间倒序排序消息
-   *
-   * @param a - 消息
-   * @param b - 消息
-   * @return {number}
-   */
-  static sortMessageDescendingByDate(a, b) {
-    return MailHelper.getTimeByMessage(b) - MailHelper.getTimeByMessage(a);
   }
 
   /**
@@ -310,97 +274,71 @@ class MailHelper {
     message.markRead();
     message.moveToTrash();
   }
-
-  /**
-   * 创建 forEach 处理器
-   *
-   * @param message - 消息
-   * @param handler - 处理器
-   */
-  static createEachHandler(message, handler) {
-    const metadata = MailHelper.parseMessage(message);
-    const data = MailHelper.parseVoiceMail(metadata.from);
-    handler({ ...metadata, ...data }) && MailHelper.deleteMessage(message);
-  }
-
-  /**
-   * 未读消息处理器
-   *
-   * @param list - 未读消息列表
-   * @param handler - 处理器
-   *
-   * @returns {void}
-   */
-  static unreadMessagesHandler(list, handler) {
-    try {
-      list.forEach((message) => MailHelper.createEachHandler(message, handler));
-    } catch (e) {
-      Logger.log(`\nError: \n    Mssage: ${e.message}\n`);
-    }
-  }
 }
 
 // Handler
 /////////////////////////////////
 
 /**
- * 推送消息
+ * 上报短信
  */
-function pushMessage() {
-  const search =
-    "is:unread from:(@txt.voice.google.com) -{report-phone-number-online}";
+function reportSMS() {
+  const search = "is:unread from:(@txt.voice.google.com)";
 
-  const list = MailHelper
-    .listUnreadMessages(search)
-    .filter((message) => MailHelper.excludeReportOnlineMessage(message));
+  function handler({ content, receiver, sender, date }) {
+    const isReportOnline = new RegExp("report-phone-number-online").test(content);
 
-  MailHelper.unreadMessagesHandler(
-    list,
-    ({ content, receiver, sender, date }) => {
-      const data = {
-        receivedAt: date,
-        content,
-        from: sender,
-        phoneNumber: receiver,
-      };
-
-      const response = TpnService.post("/api/messages/push", data);
-
+    if (isReportOnline) {
+      const reportedAt = JSONParse(content).receivedAt ?? new Date().toISOString();
+      const data = { reportedAt, from: receiver };
+      const response = TpnService.post(`/api/numbers/${sender}/online`, data);
       return response;
-    },
-  );
-}
-
-/**
- * 报告在线代理
- */
-function reportOnlineAgent() {
-  const search =
-    "is:unread from:(@txt.voice.google.com) report-phone-number-online";
-
-  const list = MailHelper
-    .listUnreadMessages(search)
-    .filter((message) => MailHelper.includeReportOnlineMessage(message));
-
-  MailHelper.unreadMessagesHandler(list, ({ content, receiver, sender }) => {
-    const data = {
-      reportedAt: JSONParse(content).receivedAt ?? new Date().toISOString(),
-      from: receiver,
+    } else {
+      const data = { receivedAt: date, content, from: sender, phoneNumber: receiver};
+      const response = TpnService.post("/api/messages/push", data);
+      return response;
     }
+  }
 
-    const response = TpnService.post(`/api/numbers/${sender}/online`, data);
-
-    return response;
-  });
+  try {
+    MailHelper.listUnreadMessages(search).forEach((message) => {
+      const metadata = MailHelper.parseMessage(message);
+      const data = MailHelper.parseVoiceMail(metadata.from);
+      const params = { ...metadata, ...data };
+      Logger.log(JSON.stringify(params));
+      if (!handler(params)) return;
+      MailHelper.deleteMessage(message);
+    });
+  } catch (e) {
+    Logger.log(`\nError: \n    Mssage: ${e.message}\n`);
+  }
 }
 
 /**
- * 发送报告在线短信
+ * 报告在线
  */
-function sendReportOnlineMessage() {
-  const phoneNumber = "12096777520";
-  const receiver = "18037951555";
-  const code = "gSbWZ4rdC8";
+function reportOnline() {
+  const items = [
+    // (209) 677 7520
+    { phoneNumber: "12096777520", receiver: "17207277520", code: "XffQZfbw--" },
+    { phoneNumber: "12096777520", receiver: "18037951555", code: "gSbWZ4rdC8" },
+    // { phoneNumber: "12096777520", receiver: "19366666938", code: "hmtrcLtgXk" },
+
+    // (720) 727 7520
+    { phoneNumber: "17207277520", receiver: "12096777520", code: "HtqrZWHKHv" },
+    { phoneNumber: "17207277520", receiver: "18037951555", code: "tfLXwt4gtg" },
+    // { phoneNumber: "17207277520", receiver: "12527130222", code: "LBftK5Dmzd" },
+
+    // (803) 795 1555
+    { phoneNumber: "18037951555", receiver: "12096777520", code: "C2Q7xP4DMd" },
+    { phoneNumber: "18037951555", receiver: "17207277520", code: "lHSTVHRVrX" },
+  ];
+
+  const phoneNumber = "18037951555";
+
+  const { receiver, code } = items.find(
+    (item) => item.phoneNumber === phoneNumber,
+  );
 
   const body = {
     action: "report-phone-number-online",
