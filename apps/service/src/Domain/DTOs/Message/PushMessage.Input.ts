@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { IsIntlPhoneNumber } from '@infra/Validator';
 
 export class PushMessageInput {
   /** 手机号码 */
   @ApiProperty()
+  @IsIntlPhoneNumber()
   @IsString()
   phoneNumber: string;
 
