@@ -1,3 +1,6 @@
+# Reference Document
+
+## Abbreviation
 
 |  A   |                    B                     |
 |:----:|:----------------------------------------:| 
@@ -12,7 +15,7 @@
 MCC、MNC、PLMN、IMSI、IMEI、ICCID、MSISDN
 https://blog.csdn.net/qlexcel/article/details/117630439
 
----
+## Error code design 
 
 MySQL Error
 
@@ -24,15 +27,11 @@ MySQL Error
 
 MySQL 8.0 Error Message Reference
 https://dev.mysql.com/doc/mysql-errors/8.0/en/
----
+
+## REST API
 
 # IBM BPM REST API 支持的 HTTP 方法
 https://www.ibm.com/docs/zh/bpm/8.5.7?topic=development-http-methods
 https://www.ibm.com/docs/zh/bpm/8.6.0?topic=apis-http-methods
 
 X-HTTP-Method-Override / X-Method-Override
-
----
-
-https://github.com/diego3g/rsxp-2023/blob/main/apps/server/vercel.json
-https://github.com/gabrielbuzziv/vercel-nest-example/blob/main/vercel.json

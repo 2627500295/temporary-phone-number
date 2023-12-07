@@ -301,12 +301,16 @@ function reportSMS() {
   }
 
   try {
-    MailHelper.listUnreadMessages(search).forEach((message) => {
+    const unreadMessages = MailHelper.listUnreadMessages(search);
+
+    if (!unreadMessages.length) return Logger.log(`\nUnread messages are empty\n`);
+
+    unreadMessages.forEach((message) => {
       const metadata = MailHelper.parseMessage(message);
       const data = MailHelper.parseVoiceMail(metadata.from);
       const params = { ...metadata, ...data };
-      Logger.log(JSON.stringify(params));
       if (!handler(params)) return;
+      Logger.log("Report success: ", JSON.stringify(params));
       MailHelper.deleteMessage(message);
     });
   } catch (e) {
@@ -334,7 +338,7 @@ function reportOnline() {
     { phoneNumber: "18037951555", receiver: "17207277520", code: "lHSTVHRVrX" },
   ];
 
-  const phoneNumber = "18037951555";
+  const phoneNumber = "17207277520";
 
   const { receiver, code } = items.find(
     (item) => item.phoneNumber === phoneNumber,
