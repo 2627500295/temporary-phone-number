@@ -1,18 +1,14 @@
 import { getRequestConfig } from "next-intl/server";
 
-const config = getRequestConfig(async ({ locale }) => {
-  const messages = await import(`../messages/${locale}.json`).then(
-    (m) => m.default,
-  );
+interface GetRequestConfigParams {
+  locale: string;
+}
 
-  console.log(
-    "getRequestConfig",
-    locale,
-    messages,
-    `../messages/${locale}.json`,
-  );
-
+async function createRequestConfig({ locale }: GetRequestConfigParams) {
+  const messages = await import(`../messages/${locale}.json`);
   return { messages };
-});
+}
+
+const config = getRequestConfig(createRequestConfig);
 
 export default config;

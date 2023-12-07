@@ -1,4 +1,6 @@
-const withNextIntl = require("next-intl/plugin")("./src/i18n/config.ts");
+function withNextIntl(nextConfig, i18nPath) {
+  return require("next-intl/plugin")(i18nPath)(nextConfig);
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,15 +14,8 @@ const nextConfig = {
     COMMIT_ID: process.env.COMMIT_ID ?? "",
     COMMIT_ID_SHORTER: process.env.COMMIT_ID_SHORTER ?? "",
   },
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        "next-intl/config": "./src/i18n/config.ts",
-      },
-    },
-  },
 };
 
-console.log(JSON.stringify(withNextIntl(nextConfig)));
+const nextConfigWithNextIntl = withNextIntl(nextConfig, "./src/i18n/config.ts");
 
-module.exports = nextConfig;
+module.exports = nextConfigWithNextIntl;

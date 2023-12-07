@@ -7,11 +7,8 @@ async function Home({ params: { locale } }: PropsWithLocaleParams) {
   return (
     <div>
       <hgroup>
-        <h1>Temporary phone number</h1>
-        <h2>临时手机号码</h2>
+        <h1>{t("TemporaryPhoneNumber")}</h1>
       </hgroup>
-
-      {t("title")}
     </div>
   );
 }
