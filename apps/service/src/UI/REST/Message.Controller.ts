@@ -15,12 +15,11 @@ export class MessageController {
   public constructor(
     private readonly messageService: MessageService,
     private readonly phoneNumberService: PhoneNumberService,
+
+    // SSE
+    // https://medium.com/using-nestjs-sse-for-updating-front-end/backend-implementation-cedd3801c210
     private eventEmitter: EventEmitter2,
   ) {}
-
-  // SSE
-  // https://medium.com/using-nestjs-sse-for-updating-front-end/backend-implementation-cedd3801c210
-  // private eventEmitter: EventEmitter2,
 
   /**
    * Push Message

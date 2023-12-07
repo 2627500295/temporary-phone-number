@@ -1,15 +1,36 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Sse } from '@nestjs/common';
 import { OnlineReportInput } from '@domain/DTOs/PhoneNumber/OnlineReport.Input';
 import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
 import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
 import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
 import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
+import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
+import { MessagePushedEvent } from '@domain/Events/MessagePushed.Event';
+import { MessageService } from '@app/Messages/Message.Service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { filter, fromEvent, map, Observable } from 'rxjs';
 
 @ApiTags('Phone Number')
 @Controller('numbers')
 export class PhoneNumberController {
-  public constructor(private readonly phoneNumber: PhoneNumberService) {}
+  public constructor(
+    private readonly message: MessageService,
+    private readonly phoneNumber: PhoneNumberService,
+
+    // SSE
+    // https://medium.com/using-nestjs-sse-for-updating-front-end/backend-implementation-cedd3801c210
+    private eventEmitter: EventEmitter2,
+  ) {}
+
+  /**
+   * List Phone numbers (获取手机号码列表)
+   */
+  @ApiOperation({ summary: 'List Phone numbers' })
+  @Get()
+  public async listPhoneNumber() {
+    return this.phoneNumber.listPhones({});
+  }
 
   /**
    * Insert phone number (添加手机号码)
@@ -18,9 +39,22 @@ export class PhoneNumberController {
    *
    *
    */
+  @ApiOperation({ summary: 'Create a Phone number' })
   @Post()
   public async createPhoneNumber(@Body() body: CreateNumberInput) {
     return this.phoneNumber.createPhone(body);
+  }
+
+  @ApiOperation({ summary: 'Retrieve a Phone number' })
+  @Get(':phoneNumber')
+  public async retrievePhoneNumber(@Body() body: CreateNumberInput) {
+    return {};
+  }
+
+  @ApiOperation({ summary: 'Update a Phone number' })
+  @Put(':phoneNumber')
+  public async updatePhoneNumber(@Body() body: CreateNumberInput) {
+    return {};
   }
 
   /**
@@ -30,6 +64,7 @@ export class PhoneNumberController {
    *
    *
    */
+  @ApiOperation({ summary: 'Delete a Phone number' })
   @Delete(':phoneNumber')
   public async deletePhoneNumber(@Param('phoneNumber') phoneNumber: string) {
     const deletePhoneNumberDTO: DeleteNumberDTO = { phoneNumber };
@@ -67,6 +102,7 @@ export class PhoneNumberController {
    * >
    * > 2
    */
+  @ApiOperation({ summary: 'Online report' })
   @Post(':phoneNumber/online')
   public async reportPhoneNumberOnline(@Param('phoneNumber') phoneNumber: string, @Body() body: OnlineReportInput) {
     const reportOnlineDTO: ReportOnlineDTO = {
@@ -77,16 +113,55 @@ export class PhoneNumberController {
     return this.phoneNumber.reportOnline(reportOnlineDTO);
   }
 
-  /**
-   * List Phone numbers (获取手机号码列表)
-   */
-  @Get()
-  public async listPhoneNumber() {
-    return this.phoneNumber.listPhones({});
+  //
+  // SMS
+  //
+
+  @ApiOperation({ summary: 'List SMS by Phone Number' })
+  @Get(':phoneNumber/sms')
+  public async listMessage() {
+    return {};
   }
 
-  @Get('online')
-  public async listOnlinePhoneNumber() {
-    return this.phoneNumber.listPhones({ isOnline: true });
+  /**
+   * Push Message
+   *
+   * https://onlinesim.io/openapi_docs/Reseller-API-UN/post/api_resellers_addMessage
+   *
+   * @param body
+   *
+   * @privateRemarks
+   * > **IMPORTANT NOTE!**
+   * >
+   * > 1
+   * >
+   * > 2
+   */
+  @ApiOperation({ summary: 'Push SMS by Phone Number' })
+  @Post(':phoneNumber/sms/push')
+  public async push(@Body() input: PushMessageInput) {
+    const message = await this.message.createMessage(input);
+
+    this.eventEmitter.emit(
+      'message.pushed',
+      new MessagePushedEvent({
+        content: message.content,
+        phoneNumber: message.phoneNumber,
+        from: message.from,
+        receivedAt: message.receivedAt,
+      }),
+    );
+
+    return message;
+  }
+
+  @ApiOperation({ summary: 'New SMS notifications by Phone Number' })
+  @ApiProduces('text/event-stream')
+  @Sse(':phoneNumber/sms/sse')
+  sse(@Param('phoneNumber') phoneNumber: string): Observable<MessageEvent> {
+    return fromEvent(this.eventEmitter, 'message.pushed').pipe(
+      filter((data: any) => data.phoneNumber === phoneNumber),
+      map((data) => new MessageEvent<any>('message', { data })),
+    );
   }
 }
