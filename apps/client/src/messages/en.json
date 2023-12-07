@@ -1,5 +1,10 @@
 {
   "Index": {
     "TemporaryPhoneNumber": "Temporary phone number"
+  },
+  "Error": {
+    "TryAgain": "Try again",
+    "SomethingWentWrong!": "Something went wrong!",
+    "NotFound": "Not Found"
   }
 }

@@ -1,5 +1,10 @@
 {
   "Index": {
     "TemporaryPhoneNumber": "临时手机号码"
+  },
+  "Error": {
+    "TryAgain": "重试",
+    "SomethingWentWrong!": "出了些问题！",
+    "NotFound": "未找到"
   }
 }
