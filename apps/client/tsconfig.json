@@ -24,6 +24,7 @@
     ],
     "paths": {
       "@website/*": [
+        "./src/libraries/*",
         "./src/*"
       ]
     }

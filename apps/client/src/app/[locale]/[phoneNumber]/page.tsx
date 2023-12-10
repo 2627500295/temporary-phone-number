@@ -1,18 +1,15 @@
-import { PropsWithParams } from "@website/types";
+import { notFound } from "next/navigation";
+
 import { isPhoneNumber } from "class-validator";
 import { parsePhoneNumber } from "libphonenumber-js/max";
-import { notFound } from "next/navigation";
+
+import { PropsWithParams } from "@website/types";
+import { getPhoneNumber } from "@website/services";
+
 import { FormatPhoneNumber } from "./components/FormatPhoneNumber";
 
-async function tfetch(path: string, init?: RequestInit) {
-  const baseURL = "https://tpn.beautifulpicture.cn";
-  const fullUrl = `${baseURL}${path}`;
-  const response = await fetch(fullUrl, init);
-  return response.json();
-}
-
 async function performChecks(phoneNumber: string) {
-  await tfetch(`/api/numbers/${phoneNumber}`);
+  await getPhoneNumber(phoneNumber);
 }
 
 async function ReceiveSMS({
