@@ -34,7 +34,7 @@ import { AppModule } from './App/App.Module';
       entities: [PhoneNumberEntity, MessageEntity, ProviderEntity],
       migrations: [],
       synchronize: NODE_ENV !== 'production',
-      logging: true,
+      logging: false,
     }),
 
     /** EventEmitter */

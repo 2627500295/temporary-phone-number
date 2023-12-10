@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Sse } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Sse } from '@nestjs/common';
 import { OnlineReportInput } from '@domain/DTOs/PhoneNumber/OnlineReport.Input';
 import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
 import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
@@ -10,6 +10,7 @@ import { MessagePushedEvent } from '@domain/Events/MessagePushed.Event';
 import { MessageService } from '@app/Messages/Message.Service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { filter, fromEvent, map, Observable } from 'rxjs';
+import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
 
 @Controller('numbers')
 export class PhoneNumberController {
@@ -28,8 +29,8 @@ export class PhoneNumberController {
   @ApiTags('Phone Number')
   @ApiOperation({ summary: 'List Phone numbers' })
   @Get()
-  public async listPhoneNumber() {
-    return this.phoneNumber.listPhones({});
+  public async listPhoneNumber(@Query() query: ListPhonesInput) {
+    return this.phoneNumber.listPhones(query);
   }
 
   /**
