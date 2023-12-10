@@ -295,7 +295,7 @@ function reportSMS() {
       return response;
     } else {
       const data = { receivedAt: date, content, from: sender, phoneNumber: receiver};
-      const response = TpnService.post("/api/messages/push", data);
+      const response = TpnService.post("/api/numbers/${sender}/sms/push", data);
       return response;
     }
   }

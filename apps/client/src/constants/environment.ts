@@ -7,3 +7,5 @@ export const BUILD_DATE = process.env.BUILD_DATE ?? "";
 export const COMMIT_ID_SHORTER = process.env.COMMIT_ID_SHORTER ?? "";
 
 export const COMMIT_ID = process.env.COMMIT_ID ?? "";
+
+export const NODE_ENV = process.env.NODE_ENV ?? "development";

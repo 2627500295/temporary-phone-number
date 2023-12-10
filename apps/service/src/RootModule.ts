@@ -1,17 +1,12 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { APP_FILTER, APP_PIPE, APP_INTERCEPTOR, APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
-import { HttpExceptionFilter } from '@infra/Filters/HttpException.Filter';
-
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
-import { MessageEntity } from '@domain/Entities/Message.Entity';
-
-import { MessageController } from '@ui/REST/Message.Controller';
-import { PhoneNumberController } from '@ui/REST/PhoneNumber.Controller';
-import { HomeController } from '@ui/REST/Home.Controller';
-import { ProviderEntity } from '@domain/Entities/Provider.Entity';
+import { NODE_ENV } from '@infra/Constants';
+import { HttpExceptionFilter } from '@infra/Filters';
+import { PhoneNumberEntity, MessageEntity, ProviderEntity } from '@domain/Entities';
+import { MessageController, HomeController, PhoneNumberController } from '@ui/REST';
 
 import { AppModule } from './App/App.Module';
 
@@ -38,7 +33,7 @@ import { AppModule } from './App/App.Module';
       entityPrefix: 'tpn_',
       entities: [PhoneNumberEntity, MessageEntity, ProviderEntity],
       migrations: [],
-      synchronize: true,
+      synchronize: NODE_ENV !== 'production',
       logging: true,
     }),
 

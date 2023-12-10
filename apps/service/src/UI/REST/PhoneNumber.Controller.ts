@@ -11,7 +11,6 @@ import { MessageService } from '@app/Messages/Message.Service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { filter, fromEvent, map, Observable } from 'rxjs';
 
-@ApiTags('Phone Number')
 @Controller('numbers')
 export class PhoneNumberController {
   public constructor(
@@ -26,6 +25,7 @@ export class PhoneNumberController {
   /**
    * List Phone numbers (获取手机号码列表)
    */
+  @ApiTags('Phone Number')
   @ApiOperation({ summary: 'List Phone numbers' })
   @Get()
   public async listPhoneNumber() {
@@ -39,18 +39,21 @@ export class PhoneNumberController {
    *
    *
    */
+  @ApiTags('Phone Number')
   @ApiOperation({ summary: 'Create a Phone number' })
   @Post()
   public async createPhoneNumber(@Body() body: CreateNumberInput) {
     return this.phoneNumber.createPhone(body);
   }
 
+  @ApiTags('Phone Number')
   @ApiOperation({ summary: 'Retrieve a Phone number' })
   @Get(':phoneNumber')
   public async retrievePhoneNumber(@Body() body: CreateNumberInput) {
     return {};
   }
 
+  @ApiTags('Phone Number')
   @ApiOperation({ summary: 'Update a Phone number' })
   @Put(':phoneNumber')
   public async updatePhoneNumber(@Body() body: CreateNumberInput) {
@@ -64,6 +67,7 @@ export class PhoneNumberController {
    *
    *
    */
+  @ApiTags('Phone Number')
   @ApiOperation({ summary: 'Delete a Phone number' })
   @Delete(':phoneNumber')
   public async deletePhoneNumber(@Param('phoneNumber') phoneNumber: string) {
@@ -102,6 +106,7 @@ export class PhoneNumberController {
    * >
    * > 2
    */
+  @ApiTags('Phone Number')
   @ApiOperation({ summary: 'Online report' })
   @Post(':phoneNumber/online')
   public async reportPhoneNumberOnline(@Param('phoneNumber') phoneNumber: string, @Body() body: OnlineReportInput) {
@@ -117,6 +122,7 @@ export class PhoneNumberController {
   // SMS
   //
 
+  @ApiTags('SMS')
   @ApiOperation({ summary: 'List SMS by Phone Number' })
   @Get(':phoneNumber/sms')
   public async listMessage() {
@@ -137,6 +143,7 @@ export class PhoneNumberController {
    * >
    * > 2
    */
+  @ApiTags('SMS')
   @ApiOperation({ summary: 'Push SMS by Phone Number' })
   @Post(':phoneNumber/sms/push')
   public async push(@Body() input: PushMessageInput) {
@@ -156,6 +163,7 @@ export class PhoneNumberController {
   }
 
   @ApiOperation({ summary: 'New SMS notifications by Phone Number' })
+  @ApiTags('SMS')
   @ApiProduces('text/event-stream')
   @Sse(':phoneNumber/sms/sse')
   sse(@Param('phoneNumber') phoneNumber: string): Observable<MessageEvent> {
