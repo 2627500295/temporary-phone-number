@@ -35,3 +35,8 @@ https://www.ibm.com/docs/zh/bpm/8.5.7?topic=development-http-methods
 https://www.ibm.com/docs/zh/bpm/8.6.0?topic=apis-http-methods
 
 X-HTTP-Method-Override / X-Method-Override
+
+## Cursor based pagination
+
+https://graphql.org/learn/pagination/#pagination-and-edges
+https://www.prisma.io/docs/orm/prisma-client/queries/pagination#cursor-based-pagination

@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThanOrEqual, Repository } from 'typeorm';
 
 import { MessageEntity } from '@domain/Entities/Message.Entity';
 
 import { MessageService } from './Message.Service';
-import { CreateMessageInput } from '@domain/DTOs/CreateMessage.Input';
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
 import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
 
 @Injectable()
@@ -29,11 +27,31 @@ export class MessageServiceImpl implements MessageService {
   //   return Promise.resolve(undefined);
   // }
 
-  // listMessages(): Promise<unknown[]> {
-  //   return Promise.resolve([]);
-  // }
+  async listMessages(phoneNumber: string): Promise<[MessageEntity[], number]> {
+    const result = await this.messageRepository.findAndCount({
+      skip: 1,
+      take: 10,
+      order: { id: 'asc' },
+      where: {
+        phoneNumber,
+        id: MoreThanOrEqual(11),
+      },
+    });
+
+    console.log(result);
+
+    return result;
+  }
+
+  // where: { id: 1 },
 
   // updateMessage(): Promise<unknown> {
   //   return Promise.resolve(undefined);
   // }
 }
+
+// if (response.status >= 200 && response.status =< 299) {
+//
+// }
+
+// Object.fromEntries(response.headers)["content-type"].includes('json')

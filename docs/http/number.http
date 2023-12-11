@@ -49,3 +49,13 @@ Content-Type: application/json
   "reportedAt": "2023-12-01T08:02:07.022Z",
   "from": "12096777520"
 }
+
+###
+
+GET {{host}}/api/numbers/17207277520/sms
+Content-Type: application/json
+
+{
+  "reportedAt": "2023-12-01T08:02:07.022Z",
+  "from": "12096777520"
+}

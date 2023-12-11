@@ -126,8 +126,8 @@ export class PhoneNumberController {
   @ApiTags('SMS')
   @ApiOperation({ summary: 'List SMS by Phone Number' })
   @Get(':phoneNumber/sms')
-  public async listMessage() {
-    return {};
+  public async listMessage(@Param('phoneNumber') phoneNumber: string) {
+    return this.message.listMessages(phoneNumber);
   }
 
   /**
@@ -147,7 +147,7 @@ export class PhoneNumberController {
   @ApiTags('SMS')
   @ApiOperation({ summary: 'Push SMS by Phone Number' })
   @Post(':phoneNumber/sms/push')
-  public async push(@Body() input: PushMessageInput) {
+  public async push(@Param('phoneNumber') phoneNumber: string, @Body() input: PushMessageInput) {
     const message = await this.message.createMessage(input);
 
     this.eventEmitter.emit(

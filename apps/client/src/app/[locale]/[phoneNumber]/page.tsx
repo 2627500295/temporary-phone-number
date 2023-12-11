@@ -4,12 +4,13 @@ import { isPhoneNumber } from "class-validator";
 import { parsePhoneNumber } from "libphonenumber-js/max";
 
 import { PropsWithParams } from "@website/types";
-import { getPhoneNumber } from "@website/services";
+import { getPhoneNumber, listMessagesByPhoneNumber } from "@website/services";
 
 import { FormatPhoneNumber } from "./components/FormatPhoneNumber";
 
 async function performChecks(phoneNumber: string) {
-  await getPhoneNumber(phoneNumber);
+  const info = await getPhoneNumber(phoneNumber);
+  console.log(info);
 }
 
 async function ReceiveSMS({
@@ -20,6 +21,10 @@ async function ReceiveSMS({
   await performChecks(phoneNumber);
 
   const parsed = parsePhoneNumber(intlPhoneNumber);
+
+  const list = await listMessagesByPhoneNumber(phoneNumber);
+
+  console.log("111", list);
 
   return (
     <div>
