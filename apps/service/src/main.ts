@@ -28,8 +28,8 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Dictionary')
-    .setDescription('The dictionary API description')
+    .setTitle('TPN')
+    .setDescription('Temporary phone number API service')
     .setVersion('1.0.0')
     .build();
   const document = SwaggerModule.createDocument(application, config);

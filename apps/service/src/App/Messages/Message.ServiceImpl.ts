@@ -38,8 +38,6 @@ export class MessageServiceImpl implements MessageService {
       },
     });
 
-    console.log(result);
-
     return result;
   }
 
@@ -55,3 +53,13 @@ export class MessageServiceImpl implements MessageService {
 // }
 
 // Object.fromEntries(response.headers)["content-type"].includes('json')
+
+// https://data.services.jetbrains.com/products?code=IIU&release.type=release&fields=name%2Ccode%2Clink&_=1702364566349
+
+// https://data.services.jetbrains.com/products?code=IIU%2CFL&release.type=preview%2Ceap%2Crc%2Crelease&fields=name%2Creleases&latest=true&_=1702364318370
+
+// ---
+
+// https://data.services.jetbrains.com/products/releases?code=IIU&latest=true&type=release&build=&_=1702364566350
+
+// https://data.services.jetbrains.com/products/releases?code=IIU%2CIIC&latest=true&type=release&build=&_=1702364668720
