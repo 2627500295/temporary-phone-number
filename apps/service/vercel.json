@@ -34,5 +34,5 @@
       ]
     }
   ],
-  "trailingSlash": true
+  "trailingSlash": false
 }
