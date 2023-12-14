@@ -1,5 +1,6 @@
 # compiled output
 dist
+!dist/swagger-ui-dist
 node_modules
 
 # Logs
