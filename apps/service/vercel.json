@@ -1,16 +1,20 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "version": 2,
-  "env": {
-
-  },
   "builds": [
+    {
+      "src": "public/swagger-ui-dist/*",
+      "use": "@vercel/static"
+    },
     {
       "src": "src/main.ts",
       "use": "@vercel/node"
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/docs/:match*",
+      "destination": "/public/swagger-ui-dist/:match*"
+    },
     {
       "source": "/(.*)",
       "destination": "src/main.ts"
@@ -23,8 +27,12 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, auth_access_token" }
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, auth_access_token"
+        }
       ]
     }
-  ]
+  ],
+  "trailingSlash": true
 }
