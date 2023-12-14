@@ -2,15 +2,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Raw, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
-import { PhoneListVO } from '@domain/ValueObjects/PhoneList.VO';
-import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
+import { PhoneNumberEntity } from '../../Domain/Entities/PhoneNumber.Entity';
+import { PhoneListVO } from '../../Domain/ValueObjects/PhoneList.VO';
+import { ListPhonesInput } from '../../Domain/DTOs/ListPhones.Input';
 
 import { PhoneNumberService } from './PhoneNumber.Service';
-import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
-import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
-import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
-import { BusinessError } from '@infra/Enums/BusinessError.Enum';
+import { CreateNumberInput } from '../../Domain/DTOs/PhoneNumber/CreateNumber.Input';
+import { ReportOnlineDTO } from '../../Domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { DeleteNumberDTO } from '../../Domain/DTOs/PhoneNumber/DeleteNumber.DTO';
+import { BusinessError } from '../../Infra/Enums/BusinessError.Enum';
 
 @Injectable()
 export class PhoneNumberServiceImpl implements PhoneNumberService {

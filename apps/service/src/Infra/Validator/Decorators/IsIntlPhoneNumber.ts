@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { CountryCode } from 'libphonenumber-js/max';
 
-import { getIntlPhoneNumber } from '@infra/Utils';
+import { getIntlPhoneNumber } from '../../Utils';
 
 export function IsPhoneNumber(region?: CountryCode, validationOptions?: ValidationOptions): PropertyDecorator {
   return ValidateBy(

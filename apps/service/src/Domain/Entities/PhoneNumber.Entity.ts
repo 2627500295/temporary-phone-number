@@ -1,11 +1,5 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { PhoneNumberRent } from '@domain/DTOs/PhoneNumber/PhoneNumberRent.Enum';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { PhoneNumberRent } from '../DTOs/PhoneNumber/PhoneNumberRent.Enum';
 
 @Entity('numbers')
 export class PhoneNumberEntity {

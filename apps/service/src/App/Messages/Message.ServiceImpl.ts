@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 
-import { MessageEntity } from '@domain/Entities/Message.Entity';
+import { MessageEntity } from '../../Domain/Entities/Message.Entity';
+import { PushMessageInput } from '../../Domain/DTOs/Message/PushMessage.Input';
 
 import { MessageService } from './Message.Service';
-import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
 
 @Injectable()
 export class MessageServiceImpl implements MessageService {

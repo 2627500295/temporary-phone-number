@@ -1,4 +1,4 @@
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
+import { PhoneNumberEntity } from '../Entities/PhoneNumber.Entity';
 
 export class PhoneListVO {
   constructor(

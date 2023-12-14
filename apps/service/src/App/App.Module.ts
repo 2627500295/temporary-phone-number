@@ -1,8 +1,8 @@
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
-import { MessageEntity } from '@domain/Entities/Message.Entity';
+import { PhoneNumberEntity } from '../Domain/Entities/PhoneNumber.Entity';
+import { MessageEntity } from '../Domain/Entities/Message.Entity';
 
 import { HomeProvider } from './Home/Home.Provider';
 import { PhoneNumberProvider } from './PhoneNumber/PhoneNumber.Provider';

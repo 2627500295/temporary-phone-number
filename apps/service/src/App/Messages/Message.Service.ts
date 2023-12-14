@@ -1,5 +1,5 @@
-import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
-import { MessageEntity } from '@domain/Entities/Message.Entity';
+import { PushMessageInput } from '../../Domain/DTOs/Message/PushMessage.Input';
+import { MessageEntity } from '../../Domain/Entities/Message.Entity';
 
 export abstract class MessageService {
   abstract createMessage(input: PushMessageInput): Promise<MessageEntity>;

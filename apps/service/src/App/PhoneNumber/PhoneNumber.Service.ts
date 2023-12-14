@@ -1,10 +1,9 @@
-import { PhoneNumberEntity } from '@domain/Entities/PhoneNumber.Entity';
-import { CreatePhoneInput } from '@domain/DTOs/CreatePhone.Input';
-import { PhoneListVO } from '@domain/ValueObjects/PhoneList.VO';
-import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
-import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
-import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
-import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
+import { PhoneNumberEntity } from '../../Domain/Entities/PhoneNumber.Entity';
+import { PhoneListVO } from '../../Domain/ValueObjects/PhoneList.VO';
+import { ListPhonesInput } from '../../Domain/DTOs/ListPhones.Input';
+import { CreateNumberInput } from '../../Domain/DTOs/PhoneNumber/CreateNumber.Input';
+import { ReportOnlineDTO } from '../../Domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { DeleteNumberDTO } from '../../Domain/DTOs/PhoneNumber/DeleteNumber.DTO';
 
 export abstract class PhoneNumberService {
   /**

@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNegative, IsOptional, Min } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-import { toBoolean } from '@infra/Utils';
+import { toBoolean } from '../../Infra/Utils';
 
 export class ListPhonesInput {
   @ApiProperty({ required: false })
