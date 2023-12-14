@@ -34,7 +34,7 @@ async function bootstrap() {
     .setVersion('1.0.0')
     .build();
   const document = SwaggerModule.createDocument(application, config);
-  SwaggerModule.setup('/api/docs', application, document);
+  SwaggerModule.setup('/api/docs/', application, document);
 
   const cluster = {
     host: '0.0.0.0',
