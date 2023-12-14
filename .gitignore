@@ -39,4 +39,3 @@ lerna-debug.log*
 
 /pnpm-lock.yaml
 
-!apps/service/dist/swagger-ui-dist/*
