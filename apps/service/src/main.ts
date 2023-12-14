@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import { RootModule } from './RootModule';
-import fastify from 'fastify';
 import { VersioningType } from '@nestjs/common';
-import { customBanner } from '@infra/Utils/customBanner';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import fastify from 'fastify';
+
+import { customBanner } from './Infra/Utils/customBanner';
+import { RootModule } from './RootModule';
 
 async function bootstrap() {
   const instance = fastify();

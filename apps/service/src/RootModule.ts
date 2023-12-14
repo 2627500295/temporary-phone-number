@@ -3,10 +3,10 @@ import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
-import { NODE_ENV } from '@infra/Constants';
-import { HttpExceptionFilter } from '@infra/Filters';
-import { PhoneNumberEntity, MessageEntity, ProviderEntity } from '@domain/Entities';
-import { MessageController, HomeController, PhoneNumberController } from '@ui/REST';
+import { NODE_ENV } from './Infra/Constants';
+import { HttpExceptionFilter } from './Infra/Filters';
+import { PhoneNumberEntity, MessageEntity, ProviderEntity } from './Domain/Entities';
+import { MessageController, HomeController, PhoneNumberController } from './UI/REST';
 
 import { AppModule } from './App/App.Module';
 
