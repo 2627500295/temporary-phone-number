@@ -1,13 +1,13 @@
 import { Body, Controller, Param, Post, Sse } from '@nestjs/common';
-
-import { MessageService } from '@app/Messages/Message.Service';
-import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
-
-import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
 import { fromEvent, map, Observable, filter } from 'rxjs';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { MessagePushedEvent } from '@domain/Events/MessagePushed.Event';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { MessageService } from '../../App/Messages/Message.Service';
+import { PhoneNumberService } from '../../App/PhoneNumber/PhoneNumber.Service';
+
+import { PushMessageInput } from '../../Domain/DTOs/Message/PushMessage.Input';
+import { MessagePushedEvent } from '../../Domain/Events/MessagePushed.Event';
 
 @ApiTags('SMS')
 @Controller('messages')

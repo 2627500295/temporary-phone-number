@@ -1,7 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
-import { HomeService } from '@app/Home/Home.Service';
-import { type HomeVO } from '@domain/ValueObjects/Home.VO';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { HomeService } from '../../App/Home/Home.Service';
+import type { HomeVO } from '../../Domain/ValueObjects/Home.VO';
 
 @ApiTags('Home')
 @Controller()
