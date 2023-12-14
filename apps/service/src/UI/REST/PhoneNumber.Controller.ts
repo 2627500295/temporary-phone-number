@@ -1,16 +1,18 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Sse } from '@nestjs/common';
-import { OnlineReportInput } from '@domain/DTOs/PhoneNumber/OnlineReport.Input';
-import { CreateNumberInput } from '@domain/DTOs/PhoneNumber/CreateNumber.Input';
-import { DeleteNumberDTO } from '@domain/DTOs/PhoneNumber/DeleteNumber.DTO';
-import { PhoneNumberService } from '@app/PhoneNumber/PhoneNumber.Service';
-import { ReportOnlineDTO } from '@domain/DTOs/PhoneNumber/ReportOnline.DTO';
 import { ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
-import { PushMessageInput } from '@domain/DTOs/Message/PushMessage.Input';
-import { MessagePushedEvent } from '@domain/Events/MessagePushed.Event';
-import { MessageService } from '@app/Messages/Message.Service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { filter, fromEvent, map, Observable } from 'rxjs';
-import { ListPhonesInput } from '@domain/DTOs/ListPhones.Input';
+
+import { OnlineReportInput } from '../../Domain/DTOs/PhoneNumber/OnlineReport.Input';
+import { CreateNumberInput } from '../../Domain/DTOs/PhoneNumber/CreateNumber.Input';
+import { DeleteNumberDTO } from '../../Domain/DTOs/PhoneNumber/DeleteNumber.DTO';
+import { ReportOnlineDTO } from '../../Domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { PushMessageInput } from '../../Domain/DTOs/Message/PushMessage.Input';
+import { MessagePushedEvent } from '../../Domain/Events/MessagePushed.Event';
+import { ListPhonesInput } from '../../Domain/DTOs/ListPhones.Input';
+
+import { PhoneNumberService } from '../../App/PhoneNumber/PhoneNumber.Service';
+import { MessageService } from '../../App/Messages/Message.Service';
 
 @Controller('numbers')
 export class PhoneNumberController {
