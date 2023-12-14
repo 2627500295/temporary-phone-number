@@ -1,6 +1,5 @@
 # compiled output
 dist
-!dist/swagger-ui-dist
 node_modules
 
 # Logs
@@ -39,3 +38,5 @@ lerna-debug.log*
 .idea/*
 
 /pnpm-lock.yaml
+
+!apps/service/dist/swagger-ui-dist/*

@@ -3,6 +3,14 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": false,
+    "assets": [
+      "Infra/Config/*.{yam{,l},txt}",
+      {
+        "include": "../node_modules/swagger-ui-dist/{swagger-ui{.css{,.map},-{bundle,standalone-preset}.js{,.map}},favicon-{32x32,16x16}.png}",
+        "outDir": "dist",
+        "watchAssets": true
+      }
+    ]
   }
 }
