@@ -47,8 +47,13 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
   async listPhones({ pageNumber = 1, pageSize = 10, isOnline = false }: ListPhonesInput): Promise<PhoneListVO> {
     const where: Record<string, any> = {};
     if (isOnline) where.reportedAt = Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`);
+
     const [list, count] = await this.phoneRepository.findAndCount({
       skip: (pageNumber - 1) * pageSize,
+      // join: {},
+      // relations: {
+      //   smsCount: '',
+      // },
       take: pageSize,
       where,
     });

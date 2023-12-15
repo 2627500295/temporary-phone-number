@@ -18,3 +18,9 @@ Content-Type: application/json
   "from": "18037951555",
   "phoneNumber": "17207277520"
 }
+
+###
+POST {{host}}/api/numbers/12096777520/sms/push
+Content-Type: application/json
+
+{"receivedAt":"2023-12-13T09:12:29.000Z","content":"Your Pear.us verification code is 7575","from":"16506006881"}

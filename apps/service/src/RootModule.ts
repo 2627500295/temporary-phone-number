@@ -79,7 +79,7 @@ import { AppModule } from './App/App.Module';
           entities: [PhoneNumberEntity, MessageEntity, ProviderEntity],
           migrations: [],
           synchronize: NODE_ENV !== 'production',
-          logging: false,
+          logging: NODE_ENV !== 'production',
         } as ConnectOptions;
       },
     }),
@@ -98,9 +98,9 @@ import { AppModule } from './App/App.Module';
       useFactory(configService: ConfigService): CacheModuleOptions {
         return {
           ...configService.get<RedisConfiguration>('redis'),
-          store({ host, port, ...rest }: RedisConfiguration): Promise<any> {
-            return redisStore({ ...rest, socket: { host, port } });
-          },
+          // store({ host, port, ...rest }: RedisConfiguration): Promise<any> {
+          //   return redisStore({ ...rest, socket: { host, port } });
+          // },
           ttl: 5,
           max: 10,
         };

@@ -150,7 +150,7 @@ export class PhoneNumberController {
   @ApiOperation({ summary: 'Push SMS by Phone Number' })
   @Post(':phoneNumber/sms/push')
   public async push(@Param('phoneNumber') phoneNumber: string, @Body() input: PushMessageInput) {
-    const message = await this.message.createMessage(input);
+    const message = await this.message.createMessage({ ...input, phoneNumber });
 
     this.eventEmitter.emit(
       'message.pushed',

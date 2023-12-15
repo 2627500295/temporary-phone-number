@@ -52,7 +52,8 @@ function createFetch(options?: FetchOptions) {
 }
 
 export default createFetch({
-  baseURL: "https://tpn.beautifulpicture.cn",
+  // baseURL: "https://tpn.beautifulpicture.cn",
+  baseURL: "http://localhost:8000",
   interceptor(response: any) {
     return response.json();
   },
