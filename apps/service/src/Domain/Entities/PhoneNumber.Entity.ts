@@ -17,11 +17,13 @@ export class PhoneNumberEntity {
   @Index('phone_number_index', { unique: true })
   @Column({
     comment: 'Phone number',
+    name: 'phone_number',
   })
   public phoneNumber: string;
 
   @Column({
     comment: 'Country code',
+    name: 'country_code',
   })
   public countryCode: number;
 
@@ -48,6 +50,7 @@ export class PhoneNumberEntity {
     type: 'timestamp',
     default: null,
     nullable: true,
+    name: 'reported_at',
   })
   public reportedAt: string;
 

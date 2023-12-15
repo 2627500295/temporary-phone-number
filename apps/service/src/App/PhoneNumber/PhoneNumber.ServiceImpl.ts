@@ -11,6 +11,12 @@ import { CreateNumberInput } from '../../Domain/DTOs/PhoneNumber/CreateNumber.In
 import { ReportOnlineDTO } from '../../Domain/DTOs/PhoneNumber/ReportOnline.DTO';
 import { DeleteNumberDTO } from '../../Domain/DTOs/PhoneNumber/DeleteNumber.DTO';
 import { BusinessError } from '../../Infra/Enums/BusinessError.Enum';
+import { ObjectId } from 'typeorm/driver/mongodb/typings';
+import { MessageEntity } from '../../Domain/Entities';
+import { parsePhoneNumber } from 'libphonenumber-js/max';
+import { getCountries } from 'libphonenumber-js';
+import { countries, getCountryCode, getCountryData, TCountryCode } from 'countries-list';
+import { path } from 'ramda';
 
 @Injectable()
 export class PhoneNumberServiceImpl implements PhoneNumberService {
@@ -58,12 +64,41 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
       where,
     });
 
+    // const result = await this.phoneRepository
+    //   .createQueryBuilder('PhoneNumbers')
+    //   .select('*')
+    //   .addSelect((qb) =>
+    //     qb
+    //       .select('received_at')
+    //       .from(MessageEntity, 'sms')
+    //       .where('PhoneNumbers.phoneNumber = sms.phoneNumber')
+    //       .orderBy('received_at')
+    //       .limit(1),
+    //   )
+    //   .addSelect((qb) =>
+    //     qb
+    //       .select('COUNT(1)', 'smsCount')
+    //       .from(MessageEntity, 'sms')
+    //       .where('PhoneNumbers.phoneNumber = sms.phoneNumber'),
+    //   )
+    //   .where({ reportedAt: Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`) })
+    //   .getRawMany();
+
     return new PhoneListVO(list, count);
   }
 
   // updatePhone(): Promise<unknown> {
   //   return Promise.resolve(undefined);
   // }
+}
+
+function getCountryName(code: TCountryCode) {
+  return path([code, 'name'], countries);
+}
+
+function getCountryCodeByPhoneNumber(phoneNumber: number | `${number}` | `+${number}`) {
+  const number = `${phoneNumber}`.startsWith('+') ? `${phoneNumber}` : `+${phoneNumber}`;
+  return parsePhoneNumber(number).country as string;
 }
 
 // offset = (pageNumber - 1) * pageSize

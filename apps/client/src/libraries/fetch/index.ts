@@ -37,15 +37,22 @@ function createFetch(options?: FetchOptions) {
       new URLSearchParams(params).toString(),
     );
 
-    const response = await fetch(url, {
-      ...opts,
-      body: JSON.stringify(opts.data),
-      method,
-    });
+    try {
+      console.log(url, opts.data, opts.params);
 
-    const interceptor = opts.interceptor ?? identical;
+      const response = await fetch(url, {
+        ...opts,
+        body: JSON.stringify(opts.data),
+        method,
+      });
 
-    return interceptor(response);
+      const interceptor = opts.interceptor ?? identical;
+
+      return interceptor(response);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
   }
 
   return request;
