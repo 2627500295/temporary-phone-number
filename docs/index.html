@@ -53,7 +53,9 @@
 
     (async function bootstrap() {
       if (isDefaultPermission()) await Notification.requestPermission();
-      const eventSource = new EventSource('https://tpn-service.vercel.app/api/numbers/18037951555/sse');
+      // const eventSource = new EventSource('https://tpn-service.vercel.app/api/numbers/18037951555/sms/sse');
+      // const eventSource = new EventSource('https://tpn.beautifulpicture.cn/api/numbers/18037951555/sms/sse');
+      const eventSource = new EventSource('http://127.0.0.1:8000/api/numbers/18037951555/sms/sse');
       eventSource.addEventListener("message", handleMessageEvent);
     })();
   </script>
