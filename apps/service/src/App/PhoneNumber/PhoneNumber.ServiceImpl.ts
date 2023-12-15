@@ -17,6 +17,8 @@ import { parsePhoneNumber } from 'libphonenumber-js/max';
 import { getCountries } from 'libphonenumber-js';
 import { countries, getCountryCode, getCountryData, TCountryCode } from 'countries-list';
 import { path } from 'ramda';
+import { plainToClass, plainToInstance } from 'class-transformer';
+import { PhoneNumberVO } from '../../Domain/ValueObjects/PhoneNumber.VO';
 
 @Injectable()
 export class PhoneNumberServiceImpl implements PhoneNumberService {
@@ -54,51 +56,36 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
     const where: Record<string, any> = {};
     if (isOnline) where.reportedAt = Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`);
 
-    const [list, count] = await this.phoneRepository.findAndCount({
-      skip: (pageNumber - 1) * pageSize,
-      // join: {},
-      // relations: {
-      //   smsCount: '',
-      // },
-      take: pageSize,
-      where,
-    });
+    const count = await this.phoneRepository.count({ where });
 
-    // const result = await this.phoneRepository
-    //   .createQueryBuilder('PhoneNumbers')
-    //   .select('*')
-    //   .addSelect((qb) =>
-    //     qb
-    //       .select('received_at')
-    //       .from(MessageEntity, 'sms')
-    //       .where('PhoneNumbers.phoneNumber = sms.phoneNumber')
-    //       .orderBy('received_at')
-    //       .limit(1),
-    //   )
-    //   .addSelect((qb) =>
-    //     qb
-    //       .select('COUNT(1)', 'smsCount')
-    //       .from(MessageEntity, 'sms')
-    //       .where('PhoneNumbers.phoneNumber = sms.phoneNumber'),
-    //   )
-    //   .where({ reportedAt: Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`) })
-    //   .getRawMany();
+    const raws = await this.phoneRepository
+      .createQueryBuilder('PhoneNumbers')
+      .select('*')
+      .addSelect((qb) =>
+        qb
+          .select('received_at')
+          .from(MessageEntity, 'sms')
+          .where('PhoneNumbers.phoneNumber = sms.phoneNumber')
+          .orderBy('received_at')
+          .limit(1),
+      )
+      .addSelect((qb) =>
+        qb
+          .select('COUNT(1)', 'sms_count')
+          .from(MessageEntity, 'sms')
+          .where('PhoneNumbers.phoneNumber = sms.phoneNumber'),
+      )
+      .where({ reportedAt: Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`) })
+      .getRawMany();
 
-    return new PhoneListVO(list, count);
+    const response = plainToInstance(PhoneNumberVO, raws, { excludeExtraneousValues: true });
+
+    return new PhoneListVO(response, count);
   }
 
   // updatePhone(): Promise<unknown> {
   //   return Promise.resolve(undefined);
   // }
-}
-
-function getCountryName(code: TCountryCode) {
-  return path([code, 'name'], countries);
-}
-
-function getCountryCodeByPhoneNumber(phoneNumber: number | `${number}` | `+${number}`) {
-  const number = `${phoneNumber}`.startsWith('+') ? `${phoneNumber}` : `+${phoneNumber}`;
-  return parsePhoneNumber(number).country as string;
 }
 
 // offset = (pageNumber - 1) * pageSize
