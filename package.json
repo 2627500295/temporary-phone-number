@@ -14,11 +14,12 @@
     "url": "https://2627500295@github.com/2627500295/temporary-phone-number.git"
   },
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "eslint-plugin-import": "^2.29.1"
+  },
   "devDependencies": {
     "tsup": "^8.0.1",
     "typescript": "^5.3.2"
   },
-  "peerDependencies": {},
   "license": "Apache-2.0"
 }
