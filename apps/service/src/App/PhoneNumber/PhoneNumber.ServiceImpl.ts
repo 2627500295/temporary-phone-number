@@ -2,23 +2,22 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Raw, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { PhoneNumberEntity } from '../../Domain/Entities/PhoneNumber.Entity';
-import { PhoneListVO } from '../../Domain/ValueObjects/PhoneList.VO';
-import { ListPhonesInput } from '../../Domain/DTOs/ListPhones.Input';
-
-import { PhoneNumberService } from './PhoneNumber.Service';
-import { CreateNumberInput } from '../../Domain/DTOs/PhoneNumber/CreateNumber.Input';
-import { ReportOnlineDTO } from '../../Domain/DTOs/PhoneNumber/ReportOnline.DTO';
-import { DeleteNumberDTO } from '../../Domain/DTOs/PhoneNumber/DeleteNumber.DTO';
-import { BusinessError } from '../../Infra/Enums/BusinessError.Enum';
 import { ObjectId } from 'typeorm/driver/mongodb/typings';
-import { MessageEntity } from '../../Domain/Entities';
 import { parsePhoneNumber } from 'libphonenumber-js/max';
 import { getCountries } from 'libphonenumber-js';
 import { countries, getCountryCode, getCountryData, TCountryCode } from 'countries-list';
 import { path } from 'ramda';
 import { plainToClass, plainToInstance } from 'class-transformer';
+import { MessageEntity } from '../../Domain/Entities';
+import { BusinessError } from '../../Infra/Enums/BusinessError.Enum';
+import { DeleteNumberDTO } from '../../Domain/DTOs/PhoneNumber/DeleteNumber.DTO';
+import { ReportOnlineDTO } from '../../Domain/DTOs/PhoneNumber/ReportOnline.DTO';
+import { CreateNumberInput } from '../../Domain/DTOs/PhoneNumber/CreateNumber.Input';
+import { ListPhonesInput } from '../../Domain/DTOs/ListPhones.Input';
+import { PhoneListVO } from '../../Domain/ValueObjects/PhoneList.VO';
+import { PhoneNumberEntity } from '../../Domain/Entities/PhoneNumber.Entity';
 import { PhoneNumberVO } from '../../Domain/ValueObjects/PhoneNumber.VO';
+import { PhoneNumberService } from './PhoneNumber.Service';
 
 @Injectable()
 export class PhoneNumberServiceImpl implements PhoneNumberService {
@@ -54,11 +53,12 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
   //
   async listPhones({ pageNumber = 1, pageSize = 10, isOnline = false }: ListPhonesInput): Promise<PhoneListVO> {
     const where: Record<string, any> = {};
-    if (isOnline) where.reportedAt = Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`);
+    if (isOnline)
+      where.reportedAt = Raw((alias) => `${alias} >= TIMEZONE('UTC', CURRENT_TIMESTAMP) - INTERVAL '1 HOUR'`);
 
     const count = await this.phoneRepository.count({ where });
 
-    const raws = await this.phoneRepository
+    const queryBuilder = this.phoneRepository
       .createQueryBuilder('PhoneNumbers')
       .select('*')
       .addSelect((qb) =>
@@ -75,8 +75,16 @@ export class PhoneNumberServiceImpl implements PhoneNumberService {
           .from(MessageEntity, 'sms')
           .where('PhoneNumbers.phoneNumber = sms.phoneNumber'),
       )
-      .where({ reportedAt: Raw((alias) => `${alias} >= CURRENT_TIMESTAMP - INTERVAL '1 HOUR'`) })
-      .getRawMany();
+      .take(pageSize)
+      .offset((pageNumber - 1) * pageSize);
+
+    if (isOnline) {
+      queryBuilder.where(where);
+    }
+
+    // How do I get the current unix timestamp from PostgreSQL?
+    // https://dba.stackexchange.com/questions/2796/how-do-i-get-the-current-unix-timestamp-from-postgresql
+    const raws = await queryBuilder.getRawMany();
 
     const response = plainToInstance(PhoneNumberVO, raws, { excludeExtraneousValues: true });
 

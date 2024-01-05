@@ -32,7 +32,17 @@ export class PhoneNumberController {
   @ApiOperation({ summary: 'List Phone numbers' })
   @Get()
   public async listPhoneNumber(@Query() query: ListPhonesInput) {
-    return this.phoneNumber.listPhones(query);
+    query.pageSize ??= 10;
+    query.pageNumber ??= 1;
+
+    const data = await this.phoneNumber.listPhones(query);
+
+    return {
+      pageSize: query.pageSize,
+      pageNumber: query.pageNumber,
+      total: data.count,
+      items: data.list,
+    };
   }
 
   /**

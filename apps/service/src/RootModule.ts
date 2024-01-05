@@ -6,19 +6,16 @@ import { CacheModule, CacheModuleOptions } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-
 import { ResponseTimeMiddleware } from '@nest-middlewares/response-time';
-
 import * as Joi from 'joi';
-import { redisStore } from 'cache-manager-redis-store';
-import type { RedisClientOptions } from 'redis';
 import { ConnectOptions } from 'typeorm';
-
+import type { RedisClientOptions } from 'redis';
+// import { redisStore } from 'cache-manager-redis-store';
 import { NODE_ENV } from './Infra/Constants';
 import { HttpExceptionFilter } from './Infra/Filters';
 import { MessageEntity, PhoneNumberEntity, ProviderEntity } from './Domain/Entities';
 import { HomeController, MessageController, PhoneNumberController } from './UI/REST';
-
+import { AppModule } from './App/App.Module';
 import {
   bannerConfiguration,
   clusterConfiguration,
@@ -29,8 +26,6 @@ import {
   RedisConfiguration,
   yamlConfiguration,
 } from './Infra/Config';
-
-import { AppModule } from './App/App.Module';
 
 @Module({
   controllers: [HomeController, PhoneNumberController, MessageController],

@@ -7,6 +7,12 @@
 GET  {{host}}/api/numbers
 Content-Type: application/json
 
+### List Phones
+
+GET  {{host}}/api/numbers
+  ?isOnline=1
+Content-Type: application/json
+
 ### List Online Phones
 
 GET  {{host}}/api/numbers/online
