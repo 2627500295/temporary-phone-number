@@ -2,16 +2,20 @@ import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { VersioningType } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import fastify, { FastifyInstance } from 'fastify';
+import fastify from 'fastify';
+import { findAPortNotInUse } from 'portscanner';
 
+import { ConfigService } from '@nestjs/config';
 import { customBanner } from './Infra/Utils/customBanner';
 import { RootModule } from './RootModule';
+import { ClusterConfiguration } from './Infra/Config';
 
 async function bootstrap() {
-  const instance = fastify();
-
+  // Fastify Adapter
+  const instance = fastify() as FastifyAdapter['instance'];
   const adapter = new FastifyAdapter(instance);
 
+  // App Instance
   const application = await NestFactory.create<NestFastifyApplication>(RootModule, adapter, {
     logger: ['log', 'error', 'warn', 'debug', 'verbose', 'fatal'],
     bodyParser: true,
@@ -23,11 +27,9 @@ async function bootstrap() {
   application.setGlobalPrefix('api');
 
   // Enable Versioning
-  application.enableVersioning({
-    type: VersioningType.URI,
-    prefix: 'v',
-  });
+  application.enableVersioning({ type: VersioningType.URI });
 
+  // Swagger
   const config = new DocumentBuilder()
     .setTitle('TPN')
     .setDescription('Temporary phone number API service')
@@ -36,27 +38,19 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(application, config);
   SwaggerModule.setup('/api/docs/', application, document);
 
-  const cluster = {
-    host: '0.0.0.0',
-    port: parseInt(process.env.PORT, 10) || 8000,
-  };
+  // Config Service
+  const configService = application.get(ConfigService);
+  const banner = configService.get<string>('banner');
+  const cluster = configService.get<ClusterConfiguration>('cluster');
 
-  await application.listen(cluster.port, cluster.host);
+  // Detect port
+  const port = await findAPortNotInUse(cluster.port ?? 8080);
 
-  const banner: string = `
+  // Listen
+  await application.listen(port, cluster.host);
 
-                               .__
-        _____  _____   ______  |__|
-       /     \\ \\__  \\  \\____ \\ |  |
-      |  Y Y  \\ / __ \\_|  |_> >|  |
-      |__|_|  /(____  /|   __/ |__|
-            \\/      \\/ |__|
-
-    \x1B[35m🌴 Server running at: http://{{host}}:{{port}}\x1B[0m
-    Press CTRL-C to stop
-  `;
-
-  console.log(customBanner(banner, cluster));
+  // Output Banner
+  console.log(customBanner(banner, { ...cluster, port }));
 }
 
 bootstrap();
