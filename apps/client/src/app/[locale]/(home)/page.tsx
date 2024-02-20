@@ -5,14 +5,14 @@ import Link from "next/link";
 
 async function Home({ params: { locale } }: PropsWithLocaleParams) {
   const t = await getTranslations({ locale, namespace: "Index" });
-  const list = (await listPhoneNumber({ isOnline: true })).list;
+  const { items } = await listPhoneNumber({ isOnline: true });
 
   return (
     <div>
       <hgroup>
         <h1>{t("TemporaryPhoneNumber")}</h1>
 
-        {list.map((item) => (
+        {items.map((item) => (
           <Link href={`/${item.phoneNumber}`} key={item.phoneNumber}>
             <div>
               <div>{item.phoneNumber}</div>

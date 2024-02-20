@@ -1,7 +1,8 @@
 import { identical } from "ramda";
 
 async function tfetch(path: string, init?: RequestInit) {
-  const baseURL = "https://tpn.beautifulpicture.cn";
+  // const baseURL = "https://tpn.beautifulpicture.cn";
+  const baseURL = "https://tpn-service.vercel.app";
   const fullUrl = `${baseURL}${path}`;
   const response = await fetch(fullUrl, init);
   return response.json();
@@ -38,13 +39,15 @@ function createFetch(options?: FetchOptions) {
     );
 
     try {
-      console.log(url, opts.data, opts.params);
+      console.log("before", url, opts.data, opts.params);
 
       const response = await fetch(url, {
         ...opts,
         body: JSON.stringify(opts.data),
         method,
       });
+
+      console.log("after", response.status);
 
       const interceptor = opts.interceptor ?? identical;
 
@@ -59,8 +62,10 @@ function createFetch(options?: FetchOptions) {
 }
 
 export default createFetch({
+  // baseURL: "http://localhost:8000",
   // baseURL: "https://tpn.beautifulpicture.cn",
-  baseURL: "http://localhost:8000",
+  baseURL: "https://tpn-service.vercel.app",
+
   interceptor(response: any) {
     return response.json();
   },
