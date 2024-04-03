@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 
 import { LocaleParams } from "@website/types";
+import { notoSansSC } from "@website/fonts";
 
 import {
   APP_NAME,
@@ -9,6 +10,7 @@ import {
   COMMIT_ID,
   NODE_ENV,
 } from "@website/constants";
+import { clsx } from "clsx";
 
 export function Document({
   children,
@@ -23,7 +25,7 @@ export function Document({
       data-commit-id={COMMIT_ID}
       data-app-env={NODE_ENV}
     >
-      <body>{children}</body>
+      <body className={clsx(notoSansSC.className)}>{children}</body>
     </html>
   );
 }

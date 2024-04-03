@@ -1,7 +1,8 @@
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+
 import { PropsWithLocaleParams } from "@website/types";
 import { listPhoneNumber } from "@website/services";
-import Link from "next/link";
 
 async function Home({ params: { locale } }: PropsWithLocaleParams) {
   const t = await getTranslations({ locale, namespace: "Index" });

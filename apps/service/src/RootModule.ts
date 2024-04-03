@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common';
-import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CacheModule, CacheModuleOptions } from '@nestjs/cache-manager';
@@ -26,9 +26,12 @@ import {
   RedisConfiguration,
   yamlConfiguration,
 } from './Infra/Config';
+import { VoiceController } from './UI/REST/Voice.Controller';
+import { PublicRoutGuard } from './Infra/Guards/PublicRoute.Guard';
+import { PublicInterceptor } from './Infra/Interceptors/Public.Interceptor';
 
 @Module({
-  controllers: [HomeController, PhoneNumberController, MessageController],
+  controllers: [HomeController, PhoneNumberController, MessageController, VoiceController],
   imports: [
     /**
      * Configuration
@@ -132,6 +135,16 @@ import {
         whitelist: true,
         transform: true,
       }),
+    },
+
+    {
+      provide: APP_GUARD,
+      useClass: PublicRoutGuard,
+    },
+
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: PublicInterceptor,
     },
   ],
   exports: [],

@@ -1,0 +1,172 @@
+/*
+// Reset
+///////////////////////////////////////////////// */
+*,
+::before,
+::after {
+    @apply box-border;
+}
+
+html {
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    @apply antialiased;
+}
+
+body {
+    font-family:
+            ui-sans-serif,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            'Segoe UI',
+            Roboto,
+            Oxygen,
+            Ubuntu,
+            Cantarell,
+            'Droid Sans Helvetica Neue',
+            Arial,
+            'Noto Sans',
+            sans-serif,
+            'Apple Color Emoji',
+            'Segoe UI Emoji',
+            'Segoe UI Symbol',
+            'Noto Color Emoji';
+    text-rendering: optimizeLegibility;
+    -webkit-font-feature-settings: 'kern', 'liga', 'calt';
+    font-feature-settings: 'kern', 'liga', 'calt';
+    @apply m-0 bg-white text-black/87 dark:bg-neutral-800 dark:text-white;
+}
+
+/* html,
+body,
+#__next,
+#root {
+  @apply w-full h-full;
+} */
+
+/*
+// UnoCSS
+///////////////////////////////////////////////// */
+/* @unocss preflights; */
+/* @unocss default; */
+@unocss all;
+
+/* fieldset {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  border-width: 0;
+  border-color: transparent;
+  border-style: none;
+} */
+
+.read-book-content {
+    p {
+        @apply text-4 line-height-8 m-0 mb-4;
+    }
+}
+
+
+:root {
+    /* Regular Colors */
+
+    /**
+     * Default color
+     *
+     * Daisy UI --b2
+     */
+    --default: "#f2f2f2";
+
+    /**
+     * Primary color
+     *
+     * Daisy UI --p
+     */
+    --primary: "#4a00ff";
+
+    /**
+     * Secondary color
+     *
+     * Daisy UI --s
+     */
+    --secondary: "#ff00d3";
+
+    /**
+     * Neutral color
+     *
+     * Daisy UI --n
+     */
+    --neutral: "#2b3440";
+
+    /**
+     * Accent color
+     *
+     * Daisy UI --a
+     */
+    --accent: "#00d7c0";
+
+    /* State Colors */
+
+    /**
+     * Info color
+     *
+     * Daisy UI --in
+     */
+    --info: "#00b6ff";
+
+    /**
+     * Success color
+     *
+     * Daisy UI --su
+     */
+    --success: "#00a96e";
+
+    /**
+     * Warning color
+     *
+     * Daisy UI --wa
+     */
+    --warning: "#ffbe00";
+
+    /**
+     * Error color
+     *
+     * Daisy UI --er
+     */
+    --error: "#ff5861";
+}
+
+[data-theme=light] {}
+[data-theme=dark] {}
+[data-theme=cupcake] {}
+[data-theme=bumblebee] {}
+[data-theme=emerald] {}
+[data-theme=corporate] {}
+[data-theme=synthwave] {}
+[data-theme=retro] {}
+[data-theme=cyberpunk] {}
+[data-theme=valentine] {}
+[data-theme=halloween] {}
+[data-theme=garden] {}
+[data-theme=forest] {}
+[data-theme=aqua] {}
+[data-theme=lofi] {}
+[data-theme=pastel] {}
+[data-theme=fantasy] {}
+[data-theme=wireframe] {}
+[data-theme=black] {}
+[data-theme=luxury] {}
+[data-theme=dracula] {}
+[data-theme=cmyk] {}
+[data-theme=autumn] {}
+[data-theme=business] {}
+[data-theme=acid] {}
+[data-theme=lemonade] {}
+[data-theme=night] {}
+[data-theme=coffee] {}
+[data-theme=winter] {}
+[data-theme=dim] {}
+[data-theme=nord] {}
+[data-theme=sunset] {}
