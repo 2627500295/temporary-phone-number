@@ -1,0 +1,19 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "enableFiletypes": [],
+  "ignorePaths": [    "**/dist/**"
+  ],
+  "dictionaries": [
+    "node",
+    "npm",
+    "typescript",
+    "softwareTerms",
+    "misc",
+    "filetypes",
+    "en_US"
+  ],
+  "includeRegExpList": [],
+  "words": ["tseslint"],
+  "overrides": []
+}

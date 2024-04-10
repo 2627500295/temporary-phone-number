@@ -13,13 +13,16 @@
     "type": "git",
     "url": "https://2627500295@github.com/2627500295/temporary-phone-number.git"
   },
-  "scripts": {},
+  "scripts": {
+    "check-spelling": "cspell --config=.cspell.json \"**/*.{md,mdx,ts,mts,cts,js,cjs,mjs,tsx,jsx}\" --no-progress --show-context --show-suggestions"
+  },
   "dependencies": {
-    "eslint-plugin-import": "^2.29.1"
   },
   "devDependencies": {
     "tsup": "^8.0.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4",
+    "eslint-plugin-import": "^2.29.1",
+    "cspell": "^8.6.1"
   },
   "license": "Apache-2.0"
 }
