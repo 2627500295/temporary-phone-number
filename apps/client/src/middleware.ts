@@ -1,17 +1,14 @@
 import createMiddleware from "next-intl/middleware";
-
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: ["en", "zh-CN"],
-
-  // Used when no locale matches
-  defaultLocale: "zh-CN",
-
-  // Don't use a locale prefix for the default locale
-  localePrefix: "as-needed",
-});
+import { useNextMiddleware } from "./middlewares/useNextMiddleware";
 
 export const config = {
-  // Skip all paths that should not be internationalized
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  matcher: ["/((?!api|_next|.*\\..*).*)"], // Skip all paths that should not be internationalized
 };
+
+const intlMiddleware = createMiddleware({
+  locales: ["en", "zh-CN"], // A list of all locales that are supported
+  defaultLocale: "zh-CN", // Used when no locale matches
+  localePrefix: "as-needed", // Don't use a locale prefix for the default locale
+});
+
+export default useNextMiddleware(intlMiddleware);
